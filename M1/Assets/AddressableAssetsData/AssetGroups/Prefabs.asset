@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 9fa5d6967f8857e46b55cfd9c3b2a593
   m_SerializeEntries:
-  - m_GUID: 28623a98943ba9640af7c2b299932c97
-    m_Address: hero
+  - m_GUID: 5a40e413d750cdb44b0fe888fbf55284
+    m_Address: BaseMap
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

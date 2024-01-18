@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class TitleScene : BaseScene
 {
+	public override bool Init()
+	{
+		if (base.Init() == false)
+			return false;
 
-    public override bool Init()
-    {
-        if (base.Init() == false)
-            return false;
+		SceneType = Define.EScene.TitleScene;
 
-        SceneType = Define.EScene.TitleScene;
-        //StartLoadAssets();
+		//StartLoadAssets();
 
-        return true;
-    }
+		return true;
+	}
 
-    void StartLoadAssets()
-    {
-        Managers.Resource.LoadAllAsync<Object>("PreLoad", (key, count, totalCount) =>
-        {
-            Debug.Log($"{key} {count} / {totalCount}");
+	void StartLoadAssets()
+	{
+		Managers.Resource.LoadAllAsync<Object>("PreLoad", (key, count, totalCount) =>
+		{
+			Debug.Log($"{key} {count}/{totalCount}");
 
-            if (count == totalCount)
-            {
-                //Managers.Data.Init();
-            }
-        });
-    }
+			if (count == totalCount)
+			{
+				//Managers.Data.Init();
+			}
+		});
+	}
 
-    void Update()
-    {
-        
-    }
+	public override void Clear()
+	{
+
+	}
 }

@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class DataManager 
+public interface ILoader<Key, Value>
 {
-    public interface ILoader<Key, Value>
-    {
-        Dictionary<Key, Value> MakeDict();
-    }
+	Dictionary<Key, Value> MakeDict();
+}
 
+public class DataManager
+{
 	public Dictionary<int, Data.TestData> TestDic { get; private set; } = new Dictionary<int, Data.TestData>();
 
 	public void Init()

@@ -20,7 +20,6 @@ public class ResourceManager
 		return null;
 	}
 
-
 	public GameObject Instantiate(string key, Transform parent = null, bool pooling = false)
 	{
 		GameObject prefab = Load<GameObject>(key);
@@ -30,10 +29,10 @@ public class ResourceManager
 			return null;
 		}
 
-        if (pooling)
-            return Managers.Pool.Pop(prefab);
+		if (pooling)
+			return Managers.Pool.Pop(prefab);
 
-        GameObject go = Object.Instantiate(prefab, parent);
+		GameObject go = Object.Instantiate(prefab, parent);
 		go.name = prefab.name;
 
 		return go;
@@ -44,10 +43,10 @@ public class ResourceManager
 		if (go == null)
 			return;
 
-        if (Managers.Pool.Push(go))
-            return;
+		if (Managers.Pool.Push(go))
+			return;
 
-        Object.Destroy(go);
+		Object.Destroy(go);
 	}
 	#endregion
 

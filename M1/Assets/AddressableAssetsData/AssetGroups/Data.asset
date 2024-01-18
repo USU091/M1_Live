@@ -12,14 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: Data
   m_EditorClassIdentifier: 
-  m_GroupName: D
+  m_GroupName: Data
   m_Data:
     m_SerializedData: []
-  m_GUID: 7efaa48e6b8aa85468fb86974d87cf72
-  m_SerializeEntries: []
+  m_GUID: 8df0b3395b0908147bbc6574eeaa462e
+  m_SerializeEntries:
+  - m_GUID: 5d418efd81401c249a291b8bc2c6c6d4
+    m_Address: TestData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: b50f3f2193a994a4cbba38a4a49abba8, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: b4f1ecceb52c2634fbb6545088d79b03, type: 2}
-    - {fileID: 11400000, guid: e84939aad2da062428a29b13d661c2f9, type: 2}
+    - {fileID: 11400000, guid: 729d7ed2c4407bf4eb500f74d5046f7c, type: 2}
+    - {fileID: 11400000, guid: 7c3b93969bf66384281425ddd35a9cb8, type: 2}
