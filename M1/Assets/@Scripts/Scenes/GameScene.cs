@@ -17,7 +17,12 @@ public class GameScene : BaseScene
 		map.transform.position = Vector3.zero;
 		map.name = "@BaseMap";
 
-		GameObject hero = Managers.Resource.Instantiate("Hero");
+		Hero hero = Managers.Object.Spawn<Hero>(Vector3.zero);
+		hero.CreatureState = ECreatureState.Move;
+
+		Managers.UI.ShowBaseUI<UI_Joystick>();
+
+
 		//Hero hero = Managers.Object.Spawn<Hero>(new Vector3Int(-10, -5, 0));
 		//hero.CreatureState = ECreatureState.Move;
 
