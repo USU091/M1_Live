@@ -15,6 +15,7 @@ public class BaseObject : InitBase
 	public float ColliderRadius { get { return Collider?.radius ?? 0.0f; } }
 	public Vector3 CenterPosition { get { return transform.position + Vector3.up * ColliderRadius; } }		//캐릭터의 발위치가 아닌 몸통 중앙부분을 포지션으로 잡음
 
+	public int DataTemplateID { get; set; }
 
 	bool _lookLeft = true;
 	public bool LookLeft

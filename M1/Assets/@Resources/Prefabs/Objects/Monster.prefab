@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 9168006511846302003}
   - component: {fileID: 8230730177075486134}
   - component: {fileID: 8924114381015641166}
-  - component: {fileID: 7354299386780735625}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -125,15 +124,3 @@ MonoBehaviour:
   _animationName: 
   loop: 1
   timeScale: 1
---- !u!114 &7354299386780735625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4147357502803065606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93bb41e5136814f4497d18f6baac70ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
