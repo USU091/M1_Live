@@ -38,13 +38,20 @@ public class Monster : Creature
 			return false;
 
 		CreatureType = ECreatureType.Monster;
-		CreatureState = ECreatureState.Idle;
 		Speed = 3.0f;
 
 		StartCoroutine(CoUpdateAI());
 
 		return true;
 	}
+
+    public override void SetInfo(int templateID)
+    {
+        base.SetInfo(templateID);
+
+		//State
+		CreatureState = ECreatureState.Idle;
+    }
 
     private void Start()
     {
@@ -73,7 +80,7 @@ public class Monster : Creature
 			int rand = Random.Range(0, 100);
 			if(rand <= patrolPercent)
             {
-				_destPos = _initPos + new Vector3(Random.Range(0, 2), Random.Range(0, 2));
+				_destPos = _initPos + new Vector3(Random.Range(-2, 2), Random.Range(-2, 2));
 				CreatureState = ECreatureState.Move;
 				return;
             }

@@ -7,11 +7,11 @@ using UnityEngine;
 
 namespace Data
 {
-    #region CreatureData
+	#region CreatureData
 
-    [Serializable]
-    public class CreatureData
-    {
+	[Serializable]
+	public class CreatureData
+	{
 		public int DataId;
 		public string DescriptionTextID;
 		public string PrefabLabel;
@@ -39,17 +39,44 @@ namespace Data
 
 	[Serializable]
 	public class CreatureDataLoader : ILoader<int, CreatureData>
-    {
+	{
 		public List<CreatureData> creatures = new List<CreatureData>();
 
 		public Dictionary<int, CreatureData> MakeDict()
-        {
+		{
 			Dictionary<int, CreatureData> dict = new Dictionary<int, CreatureData>();
 			foreach (CreatureData creature in creatures)
 				dict.Add(creature.DataId, creature);
 			return dict;
 		}
 
+	}
+	#endregion
+
+	#region Env
+	[Serializable]
+	public class EnvData
+    {
+		public int DataId;
+		public string DescriptionTextID;
+		public string PrefabLabel;
+		public float MaxHp;
+		public int ResourceAmount;
+		public float RegenTime;
+		public List<String> SkeletonDataIDs = new List<String>();
+		public int DropItemId;
+    }
+
+	public class EnvDataLoader : ILoader<int, EnvData>
+    {
+		public List<EnvData> envs = new List<EnvData>();
+		public Dictionary<int, EnvData> MakeDict()
+        {
+			Dictionary<int, EnvData> dict = new Dictionary<int, EnvData>();
+			foreach (EnvData env in envs)
+				dict.Add(env.DataId, env);
+			return dict;
+        }
     }
     #endregion
 }
