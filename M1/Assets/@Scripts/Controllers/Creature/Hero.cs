@@ -1,7 +1,13 @@
+using Spine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static Define;
+using static Unity.Burst.Intrinsics.X86.Avx;
+
 
 public class Hero : Creature
 {
@@ -30,23 +36,23 @@ public class Hero : Creature
 			
 	}
 
+
 	private void HandleOnMoveDirChanged(Vector2 dir)
 	{
 		_moveDir = dir;
-		Debug.Log(dir);
 	}
 
 	private void HandleOnJoystickStateChanged(EJoystickState joystickState)
 	{
 		switch (joystickState)
 		{
-			case Define.EJoystickState.PointerDown:
-				CreatureState = Define.ECreatureState.Move;
+			case EJoystickState.PointerDown:
+				CreatureState = ECreatureState.Move;
 				break;
-			case Define.EJoystickState.Drag:
+			case EJoystickState.Drag:
 				break;
-			case Define.EJoystickState.PointerUp:
-				CreatureState = Define.ECreatureState.Idle;
+			case EJoystickState.PointerUp:
+				CreatureState = ECreatureState.Idle;
 				break;
 			default:
 				break;

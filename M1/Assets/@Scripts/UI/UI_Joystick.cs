@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static Define;
 
 public class UI_Joystick : UI_Base
 {
-
 	enum GameObjects
 	{
 		JoystickBG,
@@ -15,7 +15,7 @@ public class UI_Joystick : UI_Base
 
 	private GameObject _background;
 	private GameObject _cursor;
-	private float _radius;		//조이스틱의 써클이 밖의 서클의 범위를 벗어나지 못하게 반지름
+	private float _radius;
 	private Vector2 _touchPos;
 
 	public override bool Init()
@@ -35,7 +35,6 @@ public class UI_Joystick : UI_Base
 
 		return true;
 	}
-
 
 	#region Event
 	public void OnPointerDown(PointerEventData eventData)

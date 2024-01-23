@@ -17,22 +17,20 @@ public class GameScene : BaseScene
 		map.transform.position = Vector3.zero;
 		map.name = "@BaseMap";
 
-		Hero hero = Managers.Object.Spawn<Hero>(new Vector3Int(-10, -5, 0), HERO_KNIGHT_ID);
-		hero.CreatureState = ECreatureState.Move;
+		HeroCamp camp = Managers.Object.Spawn<HeroCamp>(new Vector3Int(-10, -5, 0), 0);
 
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < 5; i++)
         {
-			Hero hero2 = Managers.Object.Spawn<Hero>(new Vector3Int(-10 + Random.Range(-5, 5), -5 + Random.Range(-5, 5), 0), HERO_KNIGHT_ID);
-			hero.CreatureState = ECreatureState.Move;
+			Hero hero = Managers.Object.Spawn<Hero>(new Vector3Int(-10 + Random.Range(-5, 5), -5 + Random.Range(-5, 5), 0), HERO_KNIGHT_ID);
 		}
 
 		CameraController camera =  Camera.main.GetOrAddComponent<CameraController>();
-		camera.Target = hero;
+		camera.Target = camp;
 
 		Managers.UI.ShowBaseUI<UI_Joystick>();
 
         {
-            Managers.Object.Spawn<Monster>(new Vector3Int(0, 1, 0), MONSTER_BEAR_ID);
+            Managers.Object.Spawn<Monster>(new Vector3Int(0, 10, 0), MONSTER_BEAR_ID);
 			//Managers.Object.Spawn<Monster>(new Vector3Int(1, 1, 0), MONSTER_SLIME_ID);
         }
         {

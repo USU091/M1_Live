@@ -70,7 +70,6 @@ public class Monster : Creature
 
     protected override void UpdateIdle()
     {
-		Debug.Log("Idle");
         //Patrol
         {
 			//TODO
@@ -118,7 +117,6 @@ public class Monster : Creature
 	}
 	protected override void UpdateMove()
 	{
-		Debug.Log("Move");
 
 		if(_target == null)
         {
@@ -168,7 +166,6 @@ public class Monster : Creature
 	}
 	protected override void UpdateSkill()
 	{
-		Debug.Log("Skill");
 
 		if (_coWait != null)
 			return; //아직 null이 아니면 코루틴이 실행중이므로 기다려야됨
