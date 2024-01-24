@@ -18,9 +18,10 @@ public class Hero : Creature
 		set
 		{
 			_needArrange = value;
-			//if(value)
-
-			//else
+			if (value)
+				ChangeColliderSize(EColliderSize.Big);
+			else
+				TryResizeCollider();
 
 		}
 	}
@@ -33,6 +34,13 @@ public class Hero : Creature
 			{
 				base.CreatureState = value;
 
+				if (value == ECreatureState.Move)
+					RigidBody.mass = CreatureData.Mass;
+				else
+					RigidBody.mass = CreatureData.Mass * 0.1f;		
+				//먼저 destPos에 도달한 히어로의 mass값이 무거우면 안밀리니까
+				//뒤늦게 합류하는 히어로들이 밀치면서 중앙에 들어올 수 있도록
+				//중량을 가볍게 만들어서 밀치면서 모일 수 있도록 만들었음
 
 			}
 		}
@@ -52,10 +60,13 @@ public class Hero : Creature
 			switch (value)
 			{
 				case EHeroMoveState.CollectEnv:
+					NeedArrange = true;
 					break;
 				case EHeroMoveState.TargetMonster:
+					NeedArrange = true;
 					break;
 				case EHeroMoveState.ForceMove:
+					NeedArrange = true;
 					break;
 
 			}
@@ -112,7 +123,7 @@ public class Hero : Creature
 		}
 	}
 
-
+	public float StopDistance { get; private set; } = 1.0f;
 	BaseObject _target;     //타겟 상대. 몬스터
 
 	protected override void UpdateIdle()
@@ -177,6 +188,7 @@ public class Hero : Creature
 				CreatureState = ECreatureState.Move;
 			}
 			ChaseOrAttackTarget(AttackDistance, SearchDistance);
+			return;
 		}
 
 		// 2. 주변 Env 채굴
@@ -205,7 +217,26 @@ public class Hero : Creature
 		}
 
 		// 3. Camp 주변으로 모이기
-
+		if(HeroMoveState == EHeroMoveState.ReturnToCamp)
+        {
+			Vector3 dir = HeroCampDest.position - transform.position;
+			float stopDistanceSqr = StopDistance * StopDistance;
+			if(dir.sqrMagnitude <= StopDistance)
+            {
+				HeroMoveState = EHeroMoveState.None;
+				CreatureState = ECreatureState.Idle;
+				NeedArrange = false;
+				return;
+            }
+			else
+            {
+				//멀리 있을수록 응집하는 속도가 빨라져야됨
+				float ratio = MathF.Min(1, dir.magnitude);  //TEMP
+				float moveSpeed = MoveSpeed * (float)MathF.Pow(ratio, 3);
+				SetRigidBodyVelocity(dir.normalized * moveSpeed);
+				return;
+            }
+        }
 
 
 		// 4. 기타(누르다 뗐을 때)
@@ -215,7 +246,21 @@ public class Hero : Creature
 	}
 	protected override void UpdateSkill()
 	{
+		//몬스터와는 달리 스킬을 쓸 때 강제로 이동할 수도 있음. 도망갈 수도 있기 때문에
+		//스킬 Ani Duration이 끝날때까지 억지로 대기시킬 수 없음. 
 
+		if(HeroMoveState == EHeroMoveState.ForceMove)
+        {
+			CreatureState = ECreatureState.Move;
+			return;
+        }
+
+		//때리다가 몬스터가 죽었으면 다시 캠프로  이동해야됨=> Move에서 캠프로 이동하는 state 분기잇음
+		if(_target.IsValid() == false)
+        {
+			CreatureState = ECreatureState.Move;
+			return;
+        }
 	}
 	protected override void UpdateDead()
 	{
@@ -249,34 +294,56 @@ public class Hero : Creature
 
 
 	void ChaseOrAttackTarget(float attackRange, float chaseRange)
-    {
+	{
 		Vector3 dir = (_target.transform.position - transform.position);
 		float distToTargetSqr = dir.sqrMagnitude;
-		float attackDIstanceSqr = attackRange * attackRange;
+		float attackDistanceSqr = attackRange * attackRange;
 
-		if(distToTargetSqr <= attackDIstanceSqr)
-        {
-			//공격 범위 이내로 들어왔다면 공격
+		if (distToTargetSqr <= attackDistanceSqr)
+		{
+			// 공격 범위 이내로 들어왔다면 공격.
 			CreatureState = ECreatureState.Skill;
 			return;
-        }
-        else
-        {
-			//공격범위 밖이라면 추적
+		}
+		else
+		{
+			// 공격 범위 밖이라면 추적.
 			SetRigidBodyVelocity(dir.normalized * MoveSpeed);
 
-			//너무 멀어지면 포기
+			// 너무 멀어지면 포기.
 			float searchDistanceSqr = chaseRange * chaseRange;
-			if(distToTargetSqr > searchDistanceSqr)
-            {
+			if (distToTargetSqr > searchDistanceSqr)
+			{
 				_target = null;
 				HeroMoveState = EHeroMoveState.None;
 				CreatureState = ECreatureState.Move;
+			}
+			return;
+		}
+	}
+	#endregion
 
-            }
+	//캠프로 모일때 조그마하게 응집하다가 모든 히어로들이 Idle상태이면 다시 뚱뚱하게 표현함
+	private void TryResizeCollider()
+    {
+		//일단 충돌체 아주 작게 만듬
+		ChangeColliderSize(EColliderSize.Small);
+
+		foreach(var hero in Managers.Object.Heroes)
+        {
+			if (hero.HeroMoveState == EHeroMoveState.ReturnToCamp)		//ReturnToCamp가 한 명이라도 있으면 리턴함
+				return;
+        }
+
+		//ReturnToCamp가 한 명도 없으면 콜라이더 조정
+		foreach(var hero in Managers.Object.Heroes)
+        {
+			//단 채집이나 전투중이면 스킵
+			if (hero.CreatureState == ECreatureState.Idle)
+				hero.ChangeColliderSize(EColliderSize.Big);
         }
     }
-	#endregion
+
 
 	private void HandleOnJoystickStateChanged(EJoystickState joystickState)
 	{
@@ -295,4 +362,18 @@ public class Hero : Creature
 				break;
 		}
 	}
+	//애니메이션 이벤트가 발생될때까지 기다렸다가 실행되도록 함
+    public override void OnAnimEventHandler(TrackEntry trackEntry, Spine.Event e)
+    {
+        base.OnAnimEventHandler(trackEntry, e);
+		
+		//TODO 공격 애니메이션이 끝난 뒤 이동할 것인지 등...아직 확실치 않음
+		CreatureState = ECreatureState.Move;
+
+		//Skill
+		if (_target.IsValid() == false)
+			return;
+
+		//_target.OnDamaged(this);
+    }
 }

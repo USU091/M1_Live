@@ -96,8 +96,6 @@ public class Monster : Creature
 				Vector3 dir = hero.transform.position - transform.position;
 				float distToTargetSqr = dir.sqrMagnitude;
 
-				Debug.Log(distToTargetSqr);
-
 				if (distToTargetSqr > searchDistanceSqr)	//서칭범위 이상으로 멀리 있으면 스킵
 					continue;
 
@@ -122,13 +120,14 @@ public class Monster : Creature
 			//기본적인 이동상태
 			//Patrol or Return
 			Vector3 dir = (_destPos - transform.position);
-			float moveDist = Mathf.Min(dir.magnitude, Time.deltaTime * MoveSpeed);
-			transform.TranslateEx(dir.normalized * moveDist);
 
 			if (dir.sqrMagnitude <= 0.01f)
 			{
 				CreatureState = ECreatureState.Idle;
+				return;
 			}
+
+			SetRigidBodyVelocity(dir.normalized * MoveSpeed);
 		}
 		else
         {
@@ -147,8 +146,7 @@ public class Monster : Creature
             else
             {
 				//공격 범위 밖이라면 추적
-				float moveDist = Mathf.Min(dir.magnitude, Time.deltaTime * MoveSpeed);
-				transform.TranslateEx(dir.normalized * moveDist);
+				SetRigidBodyVelocity(dir.normalized * MoveSpeed);
 
 				//너무 멀어지면 포기
 				float searchDistanceSqr = SearchDistance * SearchDistance;
