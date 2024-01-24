@@ -174,5 +174,22 @@ public class Monster : Creature
 	{
 		Debug.Log("Dead");
 	}
-	#endregion
+    #endregion
+
+    #region Battle
+    public override void OnDamaged(BaseObject attacker)
+    {
+        base.OnDamaged(attacker);
+    }
+
+    public override void OnDead(BaseObject attacker)
+    {
+        base.OnDead(attacker);
+
+		//TODO : Drop Item
+
+		Managers.Object.Despawn(this);
+    }
+
+    #endregion
 }
