@@ -12,8 +12,7 @@ public class BaseObject : InitBase
 	public SkeletonAnimation SkeletonAnim { get; private set; }
 	public Rigidbody2D RigidBody { get; private set; }
 
-	//public float ColliderRadius { get { return Collider != null ? Collider.radius : 0.0f; } }
-	public float ColliderRadius { get { return Collider?.radius ?? 0.0f; } }
+	public float ColliderRadius { get { return Collider != null ? Collider.radius : 0.0f; } }
 	public Vector3 CenterPosition { get { return transform.position + Vector3.up * ColliderRadius; } }		//캐릭터의 발위치가 아닌 몸통 중앙부분을 포지션으로 잡음
 
 	public int DataTemplateID { get; set; }
@@ -71,6 +70,21 @@ public class BaseObject : InitBase
 	protected virtual void UpdateAnimation()
 	{
 	}
+
+	public void SetRigidBodyVelocity(Vector2 velocity)
+    {
+		if (RigidBody == null)
+			return;
+
+		RigidBody.velocity = velocity;
+
+		if (velocity.x < 0)
+			LookLeft = true;
+		if (velocity.x > 0)
+			LookLeft = false; 
+
+	}
+
 
 	public void PlayAnimation(int trackIndex, string AnimName, bool loop)
 	{
