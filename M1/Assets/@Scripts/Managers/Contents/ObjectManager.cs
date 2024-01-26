@@ -9,6 +9,7 @@ public class ObjectManager
     public HashSet<Monster> Monsters { get; } = new HashSet<Monster>();
 	public HashSet<Env> Envs { get; } = new HashSet<Env>();
 	public HeroCamp Camp { get; private set; }
+	public HashSet<SkillBase> Skills { get; } = new HashSet<SkillBase>();
 
 	#region Roots
 	public Transform GetRootTransform(string name)
@@ -23,6 +24,7 @@ public class ObjectManager
 	public Transform HeroRoot { get { return GetRootTransform("@Heroes"); } }
 	public Transform MonsterRoot { get { return GetRootTransform("@Monsters"); } }
 	public Transform EnvRoot { get { return GetRootTransform("@Envs"); } }
+
 	#endregion
 
 	public T Spawn<T>(Vector3 position, int templateID) where T : BaseObject
@@ -87,7 +89,19 @@ public class ObjectManager
         {
 			Camp = go.GetComponent<HeroCamp>();
         }
+        else if (obj.ObjectType == EObjectType.Skill)
+        {
+            if (Managers.Data.SkillDic.TryGetValue(templateID, out Data.SkillData skillData) == false)
+            {
+                Debug.LogError($"ObjectManager Spawn Skill Failed!{templateID}");
+                return null;
+            }
+            GameObject sgo = Managers.Resource.Instantiate(skillData.AniName, pooling: false);
+            sgo.transform.position = position;
 
+        }
+        else
+		{ }
 		return obj as T;
 	}
 
@@ -125,6 +139,10 @@ public class ObjectManager
 		{
 			Camp = null;
 		}
+		else
+        {
+
+        }
 		Managers.Resource.Destroy(obj.gameObject);
 	}
 }

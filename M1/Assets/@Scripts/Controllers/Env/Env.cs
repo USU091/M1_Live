@@ -76,7 +76,6 @@ public class Env : BaseObject
 
         float finalDamage = 1;
         EnvState = EEnvState.OnDamaged;
-
         //TODO : Show UI
 
         Hp = Mathf.Clamp(Hp - finalDamage, 0, MaxHp);
