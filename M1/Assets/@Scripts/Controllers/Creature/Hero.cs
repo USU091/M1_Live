@@ -1,4 +1,3 @@
-using Data;
 using Spine;
 using System;
 using System.Collections;
@@ -7,26 +6,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static Define;
-
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 
 public class Hero : Creature
 {
-	ESkillID _heroSkill = ESkillID.Melee;
-
-	public ESkillID HeroSkill
-    {
-        get { return _heroSkill; }
-        set
-        {
-			if (_heroSkill != value)
-			{
-				_heroSkill = value;
-				UpdateAnimation();
-			}
-		}
-    }
-
 	bool _needArrange = true;
 	public bool NeedArrange
 	{
@@ -76,11 +60,9 @@ public class Hero : Creature
 			switch (value)
 			{
 				case EHeroMoveState.CollectEnv:
-					HeroSkill = ESkillID.Skill2;
 					NeedArrange = true;
 					break;
 				case EHeroMoveState.TargetMonster:
-					HeroSkill = ESkillID.Melee;
 					NeedArrange = true;
 					break;
 				case EHeroMoveState.ForceMove:
@@ -101,7 +83,6 @@ public class Hero : Creature
 
 		Managers.Game.OnJoystickStateChanged -= HandleOnJoystickStateChanged;
 		Managers.Game.OnJoystickStateChanged += HandleOnJoystickStateChanged;
-
 
 		//히어로 인공지능 함수 구현하기
 		StartCoroutine(CoUpdateAI());
@@ -205,7 +186,6 @@ public class Hero : Creature
 			{
 				HeroMoveState = EHeroMoveState.None;
 				CreatureState = ECreatureState.Move;
-				return;
 			}
 			ChaseOrAttackTarget(AttackDistance, SearchDistance);
 			return;
@@ -396,48 +376,4 @@ public class Hero : Creature
 
 		_target.OnDamaged(this);
     }
-
-
-	#region TestSkill
-	protected void SkillTempFunc()
-	{
-		if (HeroSkill == ESkillID.Melee)
-        {
-			Skills.AddSkill<Melee>(transform.position);
-			
-			//Managers.Data.SkillDic.TryGetValue((int)HeroSkill, out SkillData skill);
-			//PlayAnimation(0, skill.AniName, true);
-
-		}
-		else if(HeroSkill == ESkillID.Skill2)
-        {
-			Managers.Data.SkillDic.TryGetValue((int)HeroSkill, out SkillData skill);
-			PlayAnimation(0, skill.AniName, true);
-		}
-
-	}
-
-	protected override void UpdateAnimation()
-	{
-		switch (CreatureState)
-		{
-			case ECreatureState.Idle:
-				PlayAnimation(0, AnimName.IDLE, true);
-				break;
-			case ECreatureState.Skill:
-				SkillTempFunc();		
-				break;
-			case ECreatureState.Move:
-				PlayAnimation(0, AnimName.MOVE, true);
-				break;
-			case ECreatureState.Dead:
-				PlayAnimation(0, AnimName.DEAD, true);
-				RigidBody.simulated = false;
-				break;
-			default:
-				break;
-		}
-	}
-
-	#endregion
 }

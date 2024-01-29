@@ -40,7 +40,6 @@ public static class Define
 		Creature,
 		Projectile,
 		Env,
-		Skill,
 
 	}
 
@@ -99,21 +98,6 @@ public static class Define
 		Big,
     }
 
-	public enum ESkillID
-    {
-		Melee = 10001,
-		Skill2 = 10002,
-		Skill3 = 10004,
-		Skill4 = 10006,
-    }
-
-	public enum SkillType
-    {
-		None,
-		Repeat,
-		Sequence,
-    }
-
 	public const int CAMERA_PROJECTION_SIZE = 12;
 
 	public const int HERO_WIZARD_ID = 201000;
@@ -144,8 +128,6 @@ public static class AnimName
 	public const string EVENT_ATTACK_B = "event_attack";
 	public const string EVENT_SKILL_A = "event_attack";
 	public const string EVENT_SKILL_B = "event_attack";
-
-	public const string EVENT_DEAD = "event_dead";	//240126 Å×½ºÆ®
 }
 
 public static class SortingLayers

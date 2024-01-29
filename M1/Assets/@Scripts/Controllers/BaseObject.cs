@@ -119,7 +119,7 @@ public class BaseObject : InitBase
 
 	public virtual void OnAnimEventHandler(TrackEntry trackEntry, Spine.Event e)
     {
-		//Debug.Log("OnAnimEventHandler");
+		Debug.Log("OnAnimEventHandler");
     }
 	#endregion
 

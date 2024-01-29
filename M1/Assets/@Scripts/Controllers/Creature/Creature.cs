@@ -9,8 +9,6 @@ public class Creature : BaseObject
 {
 	public Data.CreatureData CreatureData { get; private set; }
     public ECreatureType CreatureType { get; protected set; } = ECreatureType.None;
-	public SkillBook Skills { get; protected set; }
-
 
 	#region Stats
 	public float Hp { get; set; }
@@ -48,9 +46,7 @@ public class Creature : BaseObject
 			return false;
 
 		ObjectType = EObjectType.Creature;
-		Skills = gameObject.GetOrAddComponent<SkillBook>();
-
-
+		
 		return true;
 	}
 
@@ -163,6 +159,25 @@ public class Creature : BaseObject
 				yield return new WaitForSeconds(UpdateAITick);
 			else
 				yield return null;
+		}
+    }
+
+    private void Update()
+    {
+        switch(CreatureState)
+        {
+			case ECreatureState.Idle:
+				UpdateIdle();
+				break;
+			case ECreatureState.Move:
+				UpdateMove();
+				break;
+			case ECreatureState.Skill:
+				UpdateSkill();
+				break;
+			case ECreatureState.Dead:
+				UpdateDead();
+				break;
 		}
     }
 

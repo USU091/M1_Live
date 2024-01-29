@@ -1,4 +1,3 @@
-using Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,16 +50,7 @@ public class Monster : Creature
 
 		//State
 		CreatureState = ECreatureState.Idle;
-
-	    Managers.Data.CreatureDic.TryGetValue(templateID, out CreatureData creatureData);
-
-		MaxHp = creatureData.MaxHp;
-		Hp = creatureData.MaxHp;
-		Atk = creatureData.Atk;
-		MoveSpeed = creatureData.MoveSpeed;
-		
-
-	}
+    }
 
     private void Start()
     {
@@ -189,26 +179,15 @@ public class Monster : Creature
     #region Battle
     public override void OnDamaged(BaseObject attacker)
     {
-		if (CreatureState == ECreatureState.Dead)
-			return;
-
-		base.OnDamaged(attacker);
-		Hero hero = attacker as Hero;
-
-		float attackDamaged = hero.Atk;
-
-		Hp = Mathf.Clamp(Hp - attackDamaged, 0, MaxHp);
-		if (Hp <= 0)
-			OnDead(attacker);
-
-	}
+        base.OnDamaged(attacker);
+    }
 
     public override void OnDead(BaseObject attacker)
     {
         base.OnDead(attacker);
 
 		//TODO : Drop Item
-		CreatureState = ECreatureState.Dead;
+
 		Managers.Object.Despawn(this);
     }
 

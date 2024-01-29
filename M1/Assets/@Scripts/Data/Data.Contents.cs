@@ -78,35 +78,5 @@ namespace Data
 			return dict;
         }
     }
-	#endregion
-
-
-	#region Skill
-	[Serializable]
-	public class SkillData
-	{
-		public int SkillID;
-		public int Damage;
-		public int Buff;
-		public string AniName;
-		public int LayerOrder;  //스킬 이펙트 중 먼저 그려질 순서
-		public float CoolTime;
-		public int RepeatYN;	//Repeat형인지 한 번 그려질 것인지
-		public float Duration;  //Repeat타입이라면 몇 초 후 다시 그려질 것인지
-		public float Speed;		//스킬실행하는 스피드
-	}
-
-	public class SkillDataLoader : ILoader<int, SkillData>
-    {
-		public List<SkillData> skills = new List<SkillData>();
-		public Dictionary<int, SkillData> MakeDict()
-        {
-			Dictionary<int, SkillData> dict = new Dictionary<int, SkillData>();
-			foreach (SkillData skill in skills)
-				dict.Add(skill.SkillID, skill);
-			return dict;
-        }
-    }
-
-	#endregion
+    #endregion
 }

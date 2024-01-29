@@ -1,5 +1,0 @@
-SkillID,Damage,Buff,AniName,LayerOrder,CoolTime,RepeatYN,Duration,Speed
-10001,30,0,attack,30,0.4,1,1.1,5
-10002,10,-10,dead,10,0.2,0,0,3
-10004,20,0,attack,20,0.3,1,4.2,2
-10006,30,0,attack,30,0.4,0,0,1
