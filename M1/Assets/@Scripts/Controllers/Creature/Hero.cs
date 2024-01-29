@@ -102,6 +102,10 @@ public class Hero : Creature
 
 		//State
 		CreatureState = ECreatureState.Idle;
+
+		//Skill
+		Skills = gameObject.GetOrAddComponent<SkillComponent>();
+		Skills.SetInfo(this, CreatureData.SkillIdList);
 	}
 	//property하나 생성해줌
 	public Transform HeroCampDest
@@ -225,7 +229,7 @@ public class Hero : Creature
         {
 			Vector3 dir = HeroCampDest.position - transform.position;
 			float stopDistanceSqr = HERO_DEFAULT_STOP_RANGE * HERO_DEFAULT_STOP_RANGE;
-			if(dir.sqrMagnitude <= HERO_DEFAULT_STOP_RANGE)
+			if(dir.sqrMagnitude <= stopDistanceSqr)
             {
 				HeroMoveState = EHeroMoveState.None;
 				CreatureState = ECreatureState.Idle;
