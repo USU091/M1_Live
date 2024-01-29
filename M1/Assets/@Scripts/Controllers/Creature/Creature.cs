@@ -188,44 +188,6 @@ public class Creature : BaseObject
 
     #endregion
 
-    #region Battle
-    public override void OnDamaged(BaseObject attacker)
-	{
-		//크리처가 뎀지 입는 함수
-		base.OnDamaged(attacker);
-
-		//공격자가 살아있는지 체크
-		if (attacker.IsValid() == false)
-			return;     //죽었다면 리턴
-
-		//데미지를 주는건 크리처뿐임. 채집물은 공격력 X
-		Creature creature = attacker as Creature;
-		if (creature == null)
-			return;
-
-		float finalDamage = creature.Atk;
-		Hp = Mathf.Clamp(Hp - finalDamage, 0, MaxHp);
-		//Clamp 함수 사용하는 이유는 2,3번째 인자가 범위를 지정해줄 수 있음.
-		//0 ~ MaxHp사이로만 반환됨
-
-		if(Hp <= 0)
-        {
-			OnDead(attacker);
-			CreatureState = ECreatureState.Dead;
-        }
-	}
-
-	public override void OnDead(BaseObject attacker)
-	{
-		//크리처가 죽을때 실행되는 함수
-		base.OnDead(attacker);
-
-
-	}
-
-    #endregion
-
-
 
     #region Wait
     protected Coroutine _coWait;

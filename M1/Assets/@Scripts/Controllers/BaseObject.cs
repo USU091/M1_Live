@@ -42,25 +42,9 @@ public class BaseObject : InitBase
 		return true;
 	}
 
-    #region Battle
-	//데미지 입는 코드 입력
+	#region Spine
 
-	public virtual void OnDamaged(BaseObject attacker)
-    {
-
-    }
-	
-	public virtual void OnDead(BaseObject attacker)
-    {
-
-    }
-
-    #endregion
-
-
-    #region Spine
-
-    protected virtual void SetSpineAnimation(string dataLabel, int sortingOrder)
+	protected virtual void SetSpineAnimation(string dataLabel, int sortingOrder)
     {
 		if (SkeletonAnim == null)
 			return;
