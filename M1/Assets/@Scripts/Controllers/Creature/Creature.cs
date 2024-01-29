@@ -1,4 +1,5 @@
 using Spine.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ using static Define;
 
 public class Creature : BaseObject
 {
+
+	public BaseObject Target { get; protected set; }
 	public Data.CreatureData CreatureData { get; private set; }
     public ECreatureType CreatureType { get; protected set; } = ECreatureType.None;
 
@@ -54,7 +57,11 @@ public class Creature : BaseObject
     {
 		DataTemplateID = templateID;
 
-		CreatureData = Managers.Data.CreatureDic[templateID];
+		if (CreatureType == ECreatureType.Hero)
+			CreatureData = Managers.Data.HeroDic[templateID];
+		else
+			CreatureData = Managers.Data.MonsterDic[templateID];
+
 		gameObject.name = $"{CreatureData.DataId}_{CreatureData.DescriptionTextID}";        //디테일을 위하여 이름을 붙여줌
 
 		//Collider, 데이터시트로 관리하기로 함.
@@ -186,11 +193,104 @@ public class Creature : BaseObject
 	protected virtual void UpdateSkill() { }
 	protected virtual void UpdateDead() { }
 
+	#endregion
+
+	#region Battle
+	public override void OnDamaged(BaseObject attacker)
+	{
+		base.OnDamaged(attacker);
+
+		if (attacker.IsValid() == false)
+			return;
+
+		Creature creature = attacker as Creature;
+		if (creature == null)
+			return;
+
+		float finalDamage = creature.Atk; // TODO
+		Hp = Mathf.Clamp(Hp - finalDamage, 0, MaxHp);
+
+		if (Hp <= 0)
+		{
+			OnDead(attacker);
+			CreatureState = ECreatureState.Dead;
+		}
+	}
+
+	public override void OnDead(BaseObject attacker)
+	{
+		base.OnDead(attacker);
+	}
+	//일정 범위 안에 들어온 object 찾는 함수(Env, Monster등)
+	protected BaseObject FindClosetInRange(float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null)
+	{
+		BaseObject target = null;
+		float bestDistanceSqr = float.MaxValue;
+		float searchDistanceSqr = range * range;
+
+		foreach (BaseObject obj in objs)
+		{
+			Vector3 dir = obj.transform.position - transform.position;
+			float distToTargetSqr = dir.sqrMagnitude;
+
+			//서치 범위보다 멀리 있으면 스킵.
+			if (distToTargetSqr > searchDistanceSqr)
+				continue;
+
+			//이미 더 좋은 후보를 찾았으면 스킵.
+			if (distToTargetSqr > bestDistanceSqr)
+				continue;
+
+			// 추가 조건
+			if (func != null && func.Invoke(obj) == false)
+				continue;
+
+			target = obj;
+			bestDistanceSqr = distToTargetSqr;
+		}
+		return target;
+	}
+
+
+	protected void ChaseOrAttackTarget(float attackRange, float chaseRange)
+	{
+		Vector3 dir = (Target.transform.position - transform.position);
+		float distToTargetSqr = dir.sqrMagnitude;
+		float attackDistanceSqr = attackRange * attackRange;
+
+		if (distToTargetSqr <= attackDistanceSqr)
+		{
+			// 공격 범위 이내로 들어왔다면 공격.
+			CreatureState = ECreatureState.Skill;
+			return;
+		}
+		else
+		{
+			// 공격 범위 밖이라면 추적.
+			SetRigidBodyVelocity(dir.normalized * MoveSpeed);
+
+			// 너무 멀어지면 포기.
+			float searchDistanceSqr = chaseRange * chaseRange;
+			if (distToTargetSqr > searchDistanceSqr)
+			{
+				Target = null;
+				CreatureState = ECreatureState.Move;
+			}
+			return;
+		}
+	}
     #endregion
 
+    #region Misc
 
-    #region Wait
-    protected Coroutine _coWait;
+	protected bool IsValid(BaseObject bo)
+    {
+		return bo.IsValid();
+    }
+	#endregion
+
+	#region Wait
+	protected Coroutine _coWait;
 	//_coWait == null이면 끝난 상태라고 인지, != null이면 기다려야 하는 상태라고 인지
 	//_coWait이 널인지 아닌지만 판단하면됨
 

@@ -26,6 +26,11 @@ public static class Extension
 		if (bo == null || bo.isActiveAndEnabled == false)
 			return false;
 
+		//크리처가 죽어있는 상황인지 아닌지를 리턴해줌. 죽은 시체에 계속 데미지를 입히려는 모션을 취할 수 있는걸 방지
+		Creature creature = bo as Creature;
+		if (creature != null)
+			return creature.CreatureState != Define.ECreatureState.Dead;
+
 		return true;
 	}
 

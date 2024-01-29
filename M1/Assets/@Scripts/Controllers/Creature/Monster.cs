@@ -60,10 +60,8 @@ public class Monster : Creature
     }
 
     #region AI
-    public float SearchDistance { get; private set; } = 8.0f;
 	public float AttackDistance { get; private set; } = 4.0f;
 
-	Creature _target;    //타겟 정보
 	Vector3 _destPos;        //가야하는 위치정보
 	Vector3 _initPos;		//일정거리 이상 멀어질 때 다시 돌아갈 원점 포지션 정보
 
@@ -85,37 +83,19 @@ public class Monster : Creature
         }
 
 
-        //search Player
+		//search Player
+		Creature creature = FindClosetInRange(MONSTER_SEARCH_DISTANCE, Managers.Object.Heroes, func: IsValid) as Creature;
+		if(creature != null)
         {
-			Creature target = null;
-			float bestDistanceSqr = float.MaxValue; //가장 큰값으로 할당
-			float searchDistanceSqr = SearchDistance * SearchDistance;
-
-			foreach (Hero hero in Managers.Object.Heroes)
-            {
-				Vector3 dir = hero.transform.position - transform.position;
-				float distToTargetSqr = dir.sqrMagnitude;
-
-				if (distToTargetSqr > searchDistanceSqr)	//서칭범위 이상으로 멀리 있으면 스킵
-					continue;
-
-				if (distToTargetSqr > bestDistanceSqr)	//이미 더 좋은 후보를 찾았다면 스킵
-					continue;
-
-				target = hero;
-				bestDistanceSqr = distToTargetSqr;
-            }
-
-			_target = target;
-			if (_target != null)
-				CreatureState = ECreatureState.Move;
-
-		}
+			Target = creature;
+			CreatureState = ECreatureState.Move;
+			return;
+        }
 	}
 	protected override void UpdateMove()
 	{
 
-		if(_target == null)
+		if(Target == null)
         {
 			//기본적인 이동상태
 			//Patrol or Return
@@ -133,31 +113,15 @@ public class Monster : Creature
         {
 			//타겟을 쫓아가는 상태
 			//Chase
-			Vector3 dir = (_target.transform.position - transform.position);
-			float distToTargetSqr = dir.sqrMagnitude;
-			float attackDistanceSqr = AttackDistance * AttackDistance;
+			ChaseOrAttackTarget(MONSTER_SEARCH_DISTANCE, 5.0f);
 
-			if(distToTargetSqr < attackDistanceSqr)
+			//너무 멀어지면 포기
+			if(Target.IsValid() == false)
             {
-				//공격범위 이내로 들어왔으므로 공격
-				CreatureState = ECreatureState.Skill;
-				StartWait(2.0f);	//2초 동안 풀타임 관리함, 공격같은 경우 애니메이션타임으로 따져도됨
+				Target = null;
+				_destPos = _initPos;
+				return;
             }
-            else
-            {
-				//공격 범위 밖이라면 추적
-				SetRigidBodyVelocity(dir.normalized * MoveSpeed);
-
-				//너무 멀어지면 포기
-				float searchDistanceSqr = SearchDistance * SearchDistance;
-				if(distToTargetSqr > searchDistanceSqr)
-                {
-					_destPos = _initPos;
-					_target = null;
-					CreatureState = ECreatureState.Move;
-                }
-
-			}
 
 		}
 	}

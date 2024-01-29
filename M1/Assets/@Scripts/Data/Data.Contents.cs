@@ -31,6 +31,7 @@ namespace Data
 		public float AtkRate;
 		public float DefRate;
 		public float MoveSpeedRate;
+		public string IconImage;		//새로 추가. 스킬이나 캐릭터를 대표하는 sprite이미지 등 추가
 		public string SkeletonDataID;
 		public string AnimatorName;
 		public List<int> SkillIdList = new List<int>();
@@ -53,8 +54,55 @@ namespace Data
 	}
 	#endregion
 
-	#region Env
+
+	#region Monster
 	[Serializable]
+	public class MonsterData : CreatureData
+    {
+		//public int DropItem;
+    }
+
+	[Serializable]
+    public class MonsterDataLoader : ILoader<int, MonsterData>
+    {
+		public List<MonsterData> monsters = new List<MonsterData>();
+
+		public Dictionary<int, MonsterData> MakeDict()
+		{
+			Dictionary<int, MonsterData> dict = new Dictionary<int, MonsterData>();
+			foreach (MonsterData monster in monsters)
+				dict.Add(monster.DataId, monster);
+			return dict;
+		}
+    }
+    #endregion
+
+    #region Hero
+	[Serializable]
+	public class HeroData : CreatureData
+    {
+
+    }
+	[Serializable]
+	public class HeroDataLoader : ILoader<int, HeroData>
+    {
+		public List<HeroData> heroes = new List<HeroData>();
+
+		public Dictionary<int, HeroData> MakeDict()
+        {
+			Dictionary<int, HeroData> dict = new Dictionary<int, HeroData>();
+			foreach (HeroData hero in heroes)
+				dict.Add(hero.DataId, hero);
+			return dict;
+        }
+	}
+
+    #endregion
+
+
+
+    #region Env
+    [Serializable]
 	public class EnvData
     {
 		public int DataId;

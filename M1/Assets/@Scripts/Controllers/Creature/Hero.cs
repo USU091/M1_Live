@@ -2,11 +2,8 @@ using Spine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 using static Define;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 
 public class Hero : Creature
@@ -34,10 +31,18 @@ public class Hero : Creature
 			{
 				base.CreatureState = value;
 
-				if (value == ECreatureState.Move)
-					RigidBody.mass = CreatureData.Mass;
-				else
-					RigidBody.mass = CreatureData.Mass * 0.1f;		
+				switch(value)
+                {
+					case ECreatureState.Move:
+						RigidBody.mass = CreatureData.Mass * 5.0f;
+						break;
+					case ECreatureState.Skill:
+						RigidBody.mass = CreatureData.Mass * 500.0f;
+						break;
+					default:
+						RigidBody.mass = CreatureData.Mass;
+						break;
+				}
 				//먼저 destPos에 도달한 히어로의 mass값이 무거우면 안밀리니까
 				//뒤늦게 합류하는 히어로들이 밀치면서 중앙에 들어올 수 있도록
 				//중량을 가볍게 만들어서 밀치면서 모일 수 있도록 만들었음
@@ -113,21 +118,20 @@ public class Hero : Creature
 
 	#region AI
 	//주인공 AI 함수 구현
-	public float SearchDistance { get; private set; } = 8.0f;       //몬스터 찾는 탐색 범위
 	public float AttackDistance		//공격하는 스킬 범위 설정
 	{
 		get
 		{
-			float targetRadius = (_target.IsValid() ? _target.ColliderRadius : 0);
+			float targetRadius = (Target.IsValid() ? Target.ColliderRadius : 0);
 			return ColliderRadius + targetRadius + 2.0f;        //원격 스킬이냐 근접 스킬이냐에 따라 달라질 수 있는 수식
 		}
 	}
 
-	public float StopDistance { get; private set; } = 1.0f;
-	BaseObject _target;     //타겟 상대. 몬스터
-
 	protected override void UpdateIdle()
 	{
+		//Idle일 때 멈춰있기를 원하므로, 다른 물체와 충돌할때 밀리는 현상을 방지하기 위해서 속도를 0으로 밀어버림
+		SetRigidBodyVelocity(Vector2.zero);
+
 		//0. 이동 상태라면 강제 변경(ex. 히어로가 사냥중이던 채굴중이던 포인터다운하는 순간 그만두고 이동하는게 우선순위가 젤 높음)
 		if (HeroMoveState == EHeroMoveState.ForceMove)
 		{
@@ -138,19 +142,19 @@ public class Hero : Creature
 		//0. 너무 멀어졌다면 강제로 캠프로 이동
 
 		//1. 몬스터 사냥
-		Creature creature = FindClosetInRange(SearchDistance, Managers.Object.Monsters) as Creature;
+		Creature creature = FindClosetInRange(HERO_SEARCH_DISTANCE, Managers.Object.Monsters) as Creature;
 		if (creature != null)
 		{
-			_target = creature;
+			Target = creature;
 			CreatureState = ECreatureState.Move;
 			HeroMoveState = EHeroMoveState.TargetMonster;
 			return;
 		}
 		//2. 주변 Env 채굴
-		Env env = FindClosetInRange(SearchDistance, Managers.Object.Envs) as Env;
+		Env env = FindClosetInRange(HERO_SEARCH_DISTANCE, Managers.Object.Envs) as Env;
 		if (env != null)
 		{
-			_target = env;
+			Target = env;
 			CreatureState = ECreatureState.Move;
 			HeroMoveState = EHeroMoveState.CollectEnv;
 			return;
@@ -182,12 +186,12 @@ public class Hero : Creature
 		if (HeroMoveState == EHeroMoveState.TargetMonster)
 		{
 			// 몬스터가 죽었으면 포기
-			if (_target.IsValid() == false)
+			if (Target.IsValid() == false)
 			{
 				HeroMoveState = EHeroMoveState.None;
 				CreatureState = ECreatureState.Move;
 			}
-			ChaseOrAttackTarget(AttackDistance, SearchDistance);
+			ChaseOrAttackTarget(AttackDistance, HERO_SEARCH_DISTANCE);
 			return;
 		}
 
@@ -195,24 +199,24 @@ public class Hero : Creature
 		if (HeroMoveState == EHeroMoveState.CollectEnv)
 		{
 			//몬스터가 있으면 포기
-			Creature creature = FindClosetInRange(SearchDistance, Managers.Object.Monsters) as Creature;
+			Creature creature = FindClosetInRange(HERO_SEARCH_DISTANCE, Managers.Object.Monsters) as Creature;
 			if(creature != null)
             {
-				_target = creature;
+				Target = creature;
 				HeroMoveState = EHeroMoveState.TargetMonster;
 				CreatureState = ECreatureState.Move;
 				return;
             }
 
 			//Env 이미 채집했으면 포기
-			if(_target.IsValid() == false)
+			if(Target.IsValid() == false)
             {
 				HeroMoveState = EHeroMoveState.None;
 				CreatureState = ECreatureState.Move;
 				return;
             }
 
-			ChaseOrAttackTarget(AttackDistance, SearchDistance);
+			ChaseOrAttackTarget(AttackDistance, HERO_SEARCH_DISTANCE);
 			return;
 		}
 
@@ -220,8 +224,8 @@ public class Hero : Creature
 		if(HeroMoveState == EHeroMoveState.ReturnToCamp)
         {
 			Vector3 dir = HeroCampDest.position - transform.position;
-			float stopDistanceSqr = StopDistance * StopDistance;
-			if(dir.sqrMagnitude <= StopDistance)
+			float stopDistanceSqr = HERO_DEFAULT_STOP_RANGE * HERO_DEFAULT_STOP_RANGE;
+			if(dir.sqrMagnitude <= HERO_DEFAULT_STOP_RANGE)
             {
 				HeroMoveState = EHeroMoveState.None;
 				CreatureState = ECreatureState.Idle;
@@ -246,17 +250,19 @@ public class Hero : Creature
 	}
 	protected override void UpdateSkill()
 	{
+		SetRigidBodyVelocity(Vector2.zero);
+
+
 		//몬스터와는 달리 스킬을 쓸 때 강제로 이동할 수도 있음. 도망갈 수도 있기 때문에
 		//스킬 Ani Duration이 끝날때까지 억지로 대기시킬 수 없음. 
-
-		if(HeroMoveState == EHeroMoveState.ForceMove)
+		if (HeroMoveState == EHeroMoveState.ForceMove)
         {
 			CreatureState = ECreatureState.Move;
 			return;
         }
 
 		//때리다가 몬스터가 죽었으면 다시 캠프로  이동해야됨=> Move에서 캠프로 이동하는 state 분기잇음
-		if(_target.IsValid() == false)
+		if(Target.IsValid() == false)
         {
 			CreatureState = ECreatureState.Move;
 			return;
@@ -264,63 +270,10 @@ public class Hero : Creature
 	}
 	protected override void UpdateDead()
 	{
+		SetRigidBodyVelocity(Vector2.zero);
 
 	}
-	//일정 범위 안에 들어온 object 찾는 함수(Env, Monster등)
-	BaseObject FindClosetInRange(float range, IEnumerable<BaseObject> objs)
-	{
-		BaseObject target = null;
-		float bestDistanceSqr = float.MaxValue;
-		float searchDistanceSqr = range * range;
 
-		foreach (BaseObject obj in objs)
-		{
-			Vector3 dir = obj.transform.position - transform.position;
-			float distToTargetSqr = dir.sqrMagnitude;
-
-			//서치 범위보다 멀리 있으면 스킵.
-			if (distToTargetSqr > searchDistanceSqr)
-				continue;
-
-			//이미 더 좋은 후보를 찾았으면 스킵.
-			if (distToTargetSqr > bestDistanceSqr)
-				continue;
-
-			target = obj;
-			bestDistanceSqr = distToTargetSqr;
-		}
-		return target;
-	}
-
-
-	void ChaseOrAttackTarget(float attackRange, float chaseRange)
-	{
-		Vector3 dir = (_target.transform.position - transform.position);
-		float distToTargetSqr = dir.sqrMagnitude;
-		float attackDistanceSqr = attackRange * attackRange;
-
-		if (distToTargetSqr <= attackDistanceSqr)
-		{
-			// 공격 범위 이내로 들어왔다면 공격.
-			CreatureState = ECreatureState.Skill;
-			return;
-		}
-		else
-		{
-			// 공격 범위 밖이라면 추적.
-			SetRigidBodyVelocity(dir.normalized * MoveSpeed);
-
-			// 너무 멀어지면 포기.
-			float searchDistanceSqr = chaseRange * chaseRange;
-			if (distToTargetSqr > searchDistanceSqr)
-			{
-				_target = null;
-				HeroMoveState = EHeroMoveState.None;
-				CreatureState = ECreatureState.Move;
-			}
-			return;
-		}
-	}
 	#endregion
 
 	//캠프로 모일때 조그마하게 응집하다가 모든 히어로들이 Idle상태이면 다시 뚱뚱하게 표현함
@@ -371,7 +324,7 @@ public class Hero : Creature
 		CreatureState = ECreatureState.Move;
 
 		//Skill
-		if (_target.IsValid() == false)
+		if (Target.IsValid() == false)
 			return;
 
 		//_target.OnDamaged(this);
