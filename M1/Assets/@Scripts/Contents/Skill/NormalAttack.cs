@@ -41,15 +41,14 @@ public class NormalAttack : SkillBase
         if (Owner.Target.IsValid() == false)
             return;
 
-        //만약 살아있다면 공격하는 코드 작성
-        if(SkillData.ProjectileId == 0)
+        if (SkillData.ProjectileId == 0)
         {
-            //Melee, 근접
-            //Owner.Target.OnDamaged(Owner, this);
+            // Melee
+            Owner.Target.OnDamaged(Owner, this);
         }
         else
         {
-            // Ranged, 원거리
+            // Ranged
             //GenerateProjectile(Owner, Owner.CenterPosition);
         }
     }

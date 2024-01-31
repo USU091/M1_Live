@@ -13,6 +13,15 @@ public class SkillComponent : InitBase
 
     Creature _owner;        //스킬을 들고 있는 주체
 
+
+    public override bool Init()
+    {
+        if (base.Init() == false)
+            return false;
+
+        return true;
+    }
+
     public void SetInfo(Creature owner, List<int> skillTemplateIDs)
     {
         _owner = owner;
@@ -33,5 +42,11 @@ public class SkillComponent : InitBase
 
         SkillList.Add(skill);
 
+    }
+
+    public SkillBase GetReadySkill()
+    {
+        // TEMP
+        return SkillList[0];
     }
 }

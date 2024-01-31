@@ -50,6 +50,10 @@ public class Monster : Creature
 
 		//State
 		CreatureState = ECreatureState.Idle;
+
+		// Skill
+		Skills = gameObject.GetOrAddComponent<SkillComponent>();
+		Skills.SetInfo(this, CreatureData.SkillIdList);
     }
 
     private void Start()
@@ -60,8 +64,6 @@ public class Monster : Creature
     }
 
     #region AI
-	public float AttackDistance { get; private set; } = 4.0f;
-
 	Vector3 _destPos;        //가야하는 위치정보
 	Vector3 _initPos;		//일정거리 이상 멀어질 때 다시 돌아갈 원점 포지션 정보
 
@@ -84,7 +86,7 @@ public class Monster : Creature
 
 
 		//search Player
-		Creature creature = FindClosetInRange(MONSTER_SEARCH_DISTANCE, Managers.Object.Heroes, func: IsValid) as Creature;
+		Creature creature = FindClosestInRange(MONSTER_SEARCH_DISTANCE, Managers.Object.Heroes, func: IsValid) as Creature;
 		if(creature != null)
         {
 			Target = creature;
@@ -113,7 +115,8 @@ public class Monster : Creature
         {
 			//타겟을 쫓아가는 상태
 			//Chase
-			ChaseOrAttackTarget(MONSTER_SEARCH_DISTANCE, 5.0f);
+			SkillBase skill = Skills.GetReadySkill();
+			ChaseOrAttackTarget(MONSTER_SEARCH_DISTANCE, skill);
 
 			//너무 멀어지면 포기
 			if(Target.IsValid() == false)
@@ -127,16 +130,34 @@ public class Monster : Creature
 	}
 	protected override void UpdateSkill()
 	{
-
-		if (_coWait != null)
-			return; //아직 null이 아니면 코루틴이 실행중이므로 기다려야됨
-
-		CreatureState = ECreatureState.Move;
+		if(Target.IsValid() == false)
+        {
+			Target = null;
+			_destPos = _initPos;
+			CreatureState = ECreatureState.Move;
+			return;
+        }
 	}
 
 	protected override void UpdateDead()
 	{
-		Debug.Log("Dead");
+		SetRigidBodyVelocity(Vector2.zero);
+	}
+	#endregion
+
+	#region Battle
+	public override void OnDamaged(BaseObject attacker, SkillBase skill)
+	{
+		base.OnDamaged(attacker, skill);
+	}
+
+	public override void OnDead(BaseObject attacker, SkillBase skill)
+	{
+		base.OnDead(attacker, skill);
+
+		// TODO : Drop Item
+
+		Managers.Object.Despawn(this);
 	}
 	#endregion
 }

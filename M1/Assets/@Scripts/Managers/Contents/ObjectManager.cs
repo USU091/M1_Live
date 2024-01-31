@@ -60,14 +60,6 @@ public class ObjectManager
 		}
 		else if (obj.ObjectType == EObjectType.Env)
 		{
-			// Data Check
-			if(templateID != 0 && Managers.Data.EnvDic.TryGetValue(templateID, out Data.EnvData data) == false )
-            {
-				Debug.LogError($"ObjectManager Spawn Env Failed !  TryGetValue TemplateID : {templateID}");
-				return null;
-
-            }
-
 			obj.transform.parent = EnvRoot;
 			Env env = go.GetComponent<Env>();
 			Envs.Add(env);
