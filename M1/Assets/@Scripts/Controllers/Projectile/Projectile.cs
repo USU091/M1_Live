@@ -9,7 +9,7 @@ public class Projectile : BaseObject
     public Creature Owner { get; private set; }
     public SkillBase Skill { get; private set; }
     public Data.ProjectileData ProjectileData { get; private set;  }
-
+	public ProjectileMotionBase ProjectileMotion { get; private set;  }
     private SpriteRenderer _spriteRenderer;
 
 	public override bool Init()
@@ -43,9 +43,19 @@ public class Projectile : BaseObject
 		//Rule
 		Collider.excludeLayers = layer;
 
+		if (ProjectileMotion != null)
+			Destroy(ProjectileMotion);
 
-		//TODO, 투사체도 종류가 다양. 직선으로 가냐, 곡선으로 가냐 등에 나눠 분기처리
+		string componentName = skill.SkillData.ComponentName;
+		ProjectileMotion = gameObject.AddComponent(Type.GetType(componentName)) as ProjectileMotionBase;
 
+		StraightMotion straightMotion = ProjectileMotion as StraightMotion;
+		if (straightMotion != null)
+			straightMotion.SetInfo(ProjectileData.DataId, owner.CenterPosition, owner.Target.CenterPosition, () => { Managers.Object.Despawn(this); });
+		
+		ParabolaMotion parabolaMotion = ProjectileMotion as ParabolaMotion;
+		if (parabolaMotion != null)
+			parabolaMotion.SetInfo(ProjectileData.DataId, owner.CenterPosition, owner.Target.CenterPosition, () => { Managers.Object.Despawn(this); });
 
 
 		StartCoroutine(CoReserveDestroy(5.0f));
@@ -58,8 +68,8 @@ public class Projectile : BaseObject
 			return;
 
 		//TODO
-		//target.OnDamaged(Owner, Skill);
-		//Managers.Object.Despawn(this);
+		target.OnDamaged(Owner, Skill);
+		Managers.Object.Despawn(this);
     }
 
     //시간이 지나면 사라지도록 예약해둠. 안사라지면 계속 쌓이므로.
