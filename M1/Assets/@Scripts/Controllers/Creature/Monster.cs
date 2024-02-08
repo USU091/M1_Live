@@ -109,7 +109,7 @@ public class Monster : Creature
 				return;
 			}
 
-			SetRigidBodyVelocity(dir.normalized * MoveSpeed);
+			//SetRigidBodyVelocity(dir.normalized * MoveSpeed);
 		}
 		else
         {
@@ -141,7 +141,6 @@ public class Monster : Creature
 
 	protected override void UpdateDead()
 	{
-		SetRigidBodyVelocity(Vector2.zero);
 	}
 	#endregion
 

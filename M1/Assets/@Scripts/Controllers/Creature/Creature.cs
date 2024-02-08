@@ -101,6 +101,9 @@ public class Creature : BaseObject
 
 		// State
 		CreatureState = ECreatureState.Idle;
+
+		//Map
+		StartCoroutine(CoLerpToCellPos());		//맵 그리드에 따라 자연스럽게 이동하는 함수 매 프레임마다 넣어주도록 코루틴으로 관리
 	}
 
 	protected override void UpdateAnimation()
@@ -125,21 +128,7 @@ public class Creature : BaseObject
 		}
 	}
 
-	public void ChangeColliderSize(EColliderSize size = EColliderSize.Normal)
-	{
-		switch (size)
-		{
-			case EColliderSize.Small:
-				Collider.radius = CreatureData.ColliderRadius * 0.8f;
-				break;
-			case EColliderSize.Normal:
-				Collider.radius = CreatureData.ColliderRadius;
-				break;
-			case EColliderSize.Big:
-				Collider.radius = CreatureData.ColliderRadius * 1.2f;
-				break;
-		}
-	}
+
 
 	#region AI
 	public float UpdateAITick { get; protected set; } = 0.0f;
@@ -257,7 +246,7 @@ public class Creature : BaseObject
 		else
 		{
 			// 공격 범위 밖이라면 추적.
-			SetRigidBodyVelocity(dir.normalized * MoveSpeed);
+			FindPathAndMoveToCellPos(Target.transform.position, HERO_DEFAULT_MOVE_DEPTH);
 
 			// 너무 멀어지면 포기.
 			float searchDistanceSqr = chaseRange * chaseRange;
@@ -304,5 +293,77 @@ public class Creature : BaseObject
 	{
 		return bo.IsValid();
 	}
+    #endregion
+
+
+    #region Map
+
+	public EFindPathResult FindPathAndMoveToCellPos(Vector3 destWorldPos, int maxDepth, bool forceMoveCloser = false)
+    {
+		Vector3Int destCellPos = Managers.Map.World2Cell(destWorldPos);
+		return FindPathAndMoveToCellPos(destCellPos, maxDepth, forceMoveCloser);
+    }
+
+	public EFindPathResult FindPathAndMoveToCellPos(Vector3Int destCellPos, int maxDepth, bool forceMoveCloser = false)
+    {
+		if (LerpCellPosCompleted == false)
+			return EFindPathResult.Fail_LerpCell;
+
+		// A*
+		//List<Vector3Int> path = Managers.Map
+		//
+		//
+
+		//if(forceMoveCloser)
+		//      {
+		//	Vector3Int diff1 = CellPos - destCellPos;
+		//	Vector3Int diff2 =]
+
+		//}
+
+
+		Vector3Int dirCellPos = destCellPos - CellPos;
+		Vector3Int nextPos = CellPos + dirCellPos;
+
+		if (Managers.Map.MoveTo(this, nextPos) == false)
+			return EFindPathResult.Fail_MoveTo;
+
+		return EFindPathResult.Success;
+    }
+
+	public bool MoveToCellPos(Vector3Int destCellPos, int maxDepth, bool forceMoveCloser = false)
+    {
+		if (LerpCellPosCompleted == false)
+			return false;
+
+		return Managers.Map.MoveTo(this, destCellPos);
+    }
+
+	protected IEnumerator CoLerpToCellPos()
+    {
+		while(true)
+        {
+			Hero hero = this as Hero;
+			if (hero != null)
+			{
+				float div = 5;
+				Vector3 campPos = Managers.Object.Camp.Destination.transform.position;
+				Vector3Int campCellPos = Managers.Map.World2Cell(campPos);
+				float ratio = Math.Max(1, (CellPos - campCellPos).magnitude / div);
+
+				LerpToCellPos(CreatureData.MoveSpeed * ratio);
+			}
+			else
+				LerpToCellPos(CreatureData.MoveSpeed);
+
+
+			yield return null;
+        }
+    }
+
+
+
+
+
 	#endregion
 }
