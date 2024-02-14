@@ -178,6 +178,10 @@ public class Creature : BaseObject
 		if (creature == null)
 			return;
 
+		//TEMP
+		if (CreatureType == ECreatureType.Hero)
+			return;
+
 		float finalDamage = creature.Atk; // TODO
 		Hp = Mathf.Clamp(Hp - finalDamage, 0, MaxHp);
 
