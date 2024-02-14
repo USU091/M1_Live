@@ -51,9 +51,6 @@ public class Monster : Creature
 		//State
 		CreatureState = ECreatureState.Idle;
 
-		// Skill
-		Skills = gameObject.GetOrAddComponent<SkillComponent>();
-		Skills.SetInfo(this, CreatureData.SkillIdList);
     }
 
     private void Start()
@@ -123,8 +120,7 @@ public class Monster : Creature
         {
 			//타겟을 쫓아가는 상태
 			//Chase
-			SkillBase skill = Skills.GetReadySkill();
-			ChaseOrAttackTarget(MONSTER_SEARCH_DISTANCE, skill);
+			ChaseOrAttackTarget(MONSTER_SEARCH_DISTANCE, AttackDistance);
 
 			//너무 멀어지면 포기
 			if(Target.IsValid() == false)
@@ -138,13 +134,16 @@ public class Monster : Creature
 	}
 	protected override void UpdateSkill()
 	{
+		//Base 의 UpdateSkill()을 반드시 실행해야함. 스킬이 무조건 지속적으로 실행되도록
+		base.UpdateSkill();
+
 		if(Target.IsValid() == false)
         {
 			Target = null;
 			_destPos = _initPos;
 			CreatureState = ECreatureState.Move;
 			return;
-        }
+		}
 	}
 
 	protected override void UpdateDead()

@@ -43,8 +43,8 @@ public class GameScene : BaseScene
         }
 
 		{
-			Env env = Managers.Object.Spawn<Env>(new Vector3(0, 2, 0), ENV_TREE1_ID);
-			env.EnvState = EEnvState.Idle;
+			//Env env = Managers.Object.Spawn<Env>(new Vector3(0, 2, 0), ENV_TREE1_ID);
+			//env.EnvState = EEnvState.Idle;
 		}
 
 		// TODO

@@ -29,14 +29,7 @@ public class NormalAttack : SkillBase
         Owner.LookAtTarget(Owner.Target);
     }
 
-    //스킬 사용했을때
-    protected override void OnAnimEventHandler(TrackEntry trackEntry, Spine.Event e)
-    {
-        if (e.ToString().Contains(SkillData.AnimName))
-            OnAttackEvent();
-    }
-
-    protected virtual void OnAttackEvent()
+    protected override void OnAttackEvent()
     {
         if (Owner.Target.IsValid() == false)
             return;
@@ -51,16 +44,6 @@ public class NormalAttack : SkillBase
             // Ranged
             GenerateProjectile(Owner, Owner.CenterPosition);
         }
-    }
-
-    protected override void OnAnimCompleteHandler(TrackEntry trackEntry)
-    {
-        if (Owner.Target.IsValid() == false)
-            return;
-
-        //몬스터를 공격하다가 중간에 다른 지점으로 포인트를 찍고 이동하는 것을 1순위로 두었기 때문에, Skill상태일 때에만 이동하도록 만듬
-        if (Owner.CreatureState == Define.ECreatureState.Skill)
-            Owner.CreatureState = Define.ECreatureState.Move;
     }
 
 }

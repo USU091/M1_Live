@@ -2,8 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using static Define;
 
 namespace Data
 {
@@ -16,26 +15,23 @@ namespace Data
 		public string DescriptionTextID;
 		public string PrefabLabel;
 		public float ColliderOffsetX;
-		public float ColliderOffstY;
+		public float ColliderOffsetY;
 		public float ColliderRadius;
-		public float Mass;
 		public float MaxHp;
-		public float MaxHpBonus;
+		public float UpMaxHpBonus;
 		public float Atk;
 		public float AtkRange;
 		public float AtkBonus;
-		public float Def;
 		public float MoveSpeed;
-		public float TotalExp;
-		public float HpRate;
-		public float AtkRate;
-		public float DefRate;
-		public float MoveSpeedRate;
-		public string IconImage;		//새로 추가. 스킬이나 캐릭터를 대표하는 sprite이미지 등 추가
+		public float CriRate;
+		public float CriDamage;
+		public string IconImage;
 		public string SkeletonDataID;
-		public string AnimatorName;
-		public List<int> SkillIdList = new List<int>();
-		
+		public int DefaultSkillId;
+		public int EnvSkillId;
+		public int SkillAId;
+		public int SkillBId;
+
 	}
 
 	[Serializable]
@@ -107,7 +103,6 @@ namespace Data
 		public int DataId;
 		public string Name;
 		public string ClassName;
-		public string ComponentName;
 		public string Description;
 		public int ProjectileId;
 		public string PrefabLabel;
@@ -116,13 +111,15 @@ namespace Data
 		public float CoolTime;
 		public float DamageMultiplier;
 		public float Duration;
-		public float NumProjectiles;
+		public float AnimImpactDuration;
 		public string CastingSound;
-		public float AngleBetweenProj;
 		public float SkillRange;
-		public float RotateSpeed;
 		public float ScaleMultiplier;
-		public float AngleRange;
+		public int TargetCount;
+		public List<int> EffectIds = new List<int>();
+		public int NextLevelId;
+		public int AoEId;
+		public EEffectSize EffectSize;
 	}
 
 	[Serializable]
@@ -148,12 +145,11 @@ namespace Data
 	{
 		public int DataId;
 		public string Name;
+		public string ClassName;
 		public string ComponentName;
 		public string ProjectileSpriteName;
 		public string PrefabLabel;
 		public float Duration;
-		public float NumBounce;
-		public float NumPenerations;
 		public float HitSound;
 		public float ProjRange;
 		public float ProjSpeed;

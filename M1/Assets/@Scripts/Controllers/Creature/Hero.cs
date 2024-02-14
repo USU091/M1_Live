@@ -71,9 +71,6 @@ public class Hero : Creature
 		// State
 		CreatureState = ECreatureState.Idle;
 
-		// Skill
-		Skills = gameObject.GetOrAddComponent<SkillComponent>();
-		Skills.SetInfo(this, CreatureData.SkillIdList);
 	}
 
 	public Transform HeroCampDest
@@ -161,8 +158,7 @@ public class Hero : Creature
 				return;
 			}
 
-			SkillBase skill = Skills.GetReadySkill();
-			ChaseOrAttackTarget(HERO_SEARCH_DISTANCE, skill);
+			ChaseOrAttackTarget(HERO_SEARCH_DISTANCE, AttackDistance);
 			return;
 		}
 
@@ -187,8 +183,7 @@ public class Hero : Creature
 				return;
 			}
 
-			SkillBase skill = Skills.GetReadySkill();
-			ChaseOrAttackTarget(HERO_SEARCH_DISTANCE, skill);
+			ChaseOrAttackTarget(HERO_SEARCH_DISTANCE, AttackDistance);
 			return;
 		}
 
@@ -283,6 +278,9 @@ public class Hero : Creature
 
 	protected override void UpdateSkill()
 	{
+		//반드시 base의 UpdateSkill()을 실행해야지 스킬의 지속시간만큼 지속적으로 공격을 할 수 있음;
+		base.UpdateSkill();
+
 
 		if (HeroMoveState == EHeroMoveState.ForceMove)
 		{
