@@ -18,61 +18,61 @@ MonoBehaviour:
   m_GUID: 581a7fcd2d1080f448fb788e7d0330f3
   m_SerializeEntries:
   - m_GUID: 2df0224194949fa4eb0abf7f0794c697
-    m_Address: goblin_shot
+    m_Address: goblin_shot.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e9800db185e09294eb17706198388639
-    m_Address: wizard_shot
+    m_Address: wizard_shot.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 12f4ac35f4aa55f4088d268292867a5c
-    m_Address: Object_Firewood
+    m_Address: Object_Firewood.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a13b208f317e82044b2a3e8e191b270f
-    m_Address: Object_Meat
+    m_Address: Object_Meat.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7a29e2e2fc5d1564e96f6fabcd88ae87
-    m_Address: Object_Mineral
+    m_Address: Object_Mineral.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4d5660e9fa02adc4c858e85a0d588f81
-    m_Address: 001
+    m_Address: 001.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eb8a81b15336c0b47ac10ec3747c5c5c
-    m_Address: 002
+    m_Address: 002.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4278500889e5a8a49b6ac713471b1e11
-    m_Address: 005
+    m_Address: 005.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 61c1a440b4a958941b6330f3e7c9ddc0
-    m_Address: 003
+    m_Address: 003.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e29ac53913e3461459fca4d948a9592f
-    m_Address: 004
+    m_Address: 004.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

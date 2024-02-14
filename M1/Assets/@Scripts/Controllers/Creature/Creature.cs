@@ -293,19 +293,18 @@ public class Creature : BaseObject
 	{
 		return bo.IsValid();
 	}
-    #endregion
+	#endregion
 
 
-    #region Map
-
+	#region Map
 	public EFindPathResult FindPathAndMoveToCellPos(Vector3 destWorldPos, int maxDepth, bool forceMoveCloser = false)
-    {
+	{
 		Vector3Int destCellPos = Managers.Map.World2Cell(destWorldPos);
 		return FindPathAndMoveToCellPos(destCellPos, maxDepth, forceMoveCloser);
-    }
+	}
 
 	public EFindPathResult FindPathAndMoveToCellPos(Vector3Int destCellPos, int maxDepth, bool forceMoveCloser = false)
-    {
+	{
 		if (LerpCellPosCompleted == false)
 			return EFindPathResult.Fail_LerpCell;
 
@@ -322,7 +321,6 @@ public class Creature : BaseObject
 				return EFindPathResult.Fail_NoPath;
 		}
 
-
 		Vector3Int dirCellPos = path[1] - CellPos;
 		//Vector3Int dirCellPos = destCellPos - CellPos;
 		Vector3Int nextPos = CellPos + dirCellPos;
@@ -331,7 +329,7 @@ public class Creature : BaseObject
 			return EFindPathResult.Fail_MoveTo;
 
 		return EFindPathResult.Success;
-    }
+	}
 
 	public bool MoveToCellPos(Vector3Int destCellPos, int maxDepth, bool forceMoveCloser = false)
     {
@@ -343,8 +341,8 @@ public class Creature : BaseObject
 
 	protected IEnumerator CoLerpToCellPos()
     {
-		while(true)
-        {
+		while (true)
+		{
 			Hero hero = this as Hero;
 			if (hero != null)
 			{
@@ -358,14 +356,8 @@ public class Creature : BaseObject
 			else
 				LerpToCellPos(CreatureData.MoveSpeed);
 
-
 			yield return null;
-        }
-    }
-
-
-
-
-
+		}
+	}
 	#endregion
 }

@@ -40,7 +40,7 @@ public class MapManager
 
 		ParseCollisionData(map, mapName);
 
-		//SpawnObjectsByData(map, mapName);
+		SpawnObjectsByData(map, mapName);
 	}
 
 	public void DestroyMap()
@@ -90,7 +90,7 @@ public class MapManager
 			}
 		}
 	}
-	/*
+
 	void SpawnObjectsByData(GameObject map, string mapName, string tilemap = "Tilemap_Object")
 	{
 		Tilemap tm = Util.FindChild<Tilemap>(map, tilemap, true);
@@ -129,7 +129,7 @@ public class MapManager
 			}
 		}
 	}
-	*/
+
 	public bool MoveTo(Creature obj, Vector3Int cellPos, bool forceMove = false)
 	{
 		if (CanGo(cellPos) == false)
@@ -259,7 +259,7 @@ public class MapManager
 		new Vector3Int(-1, 0, 0), // L
 		new Vector3Int(-1, 1, 0), // LU
 	};
-	
+
 	public List<Vector3Int> FindPath(Vector3Int startCellPos, Vector3Int destCellPos, int maxDepth = 10)
 	{
 		// 지금까지 제일 좋은 후보 기록.
@@ -338,7 +338,7 @@ public class MapManager
 
 		return CalcCellPathFromParent(parent, dest);
 	}
-	
+
 	List<Vector3Int> CalcCellPathFromParent(Dictionary<Vector3Int, Vector3Int> parent, Vector3Int dest)
 	{
 		List<Vector3Int> cells = new List<Vector3Int>();

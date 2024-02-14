@@ -133,15 +133,15 @@ public class Hero : Creature
 	{
 
 		// 히어로들이 너무 멀어졌다면 강제 이동시킴, ForcePath가 제일 우선순위임,
-
-		if(HeroMoveState == EHeroMoveState.ForcePath)
-        {
+		if (HeroMoveState == EHeroMoveState.ForcePath)
+		{
 			MoveByForcePath();
 			return;
-        }
+		}
 
 		if (CheckHeroCampDistanceAndForcePath())
 			return;
+
 
 		// 0. 누르고 있다면, 강제 이동
 		if (HeroMoveState == EHeroMoveState.ForceMove)
@@ -163,7 +163,6 @@ public class Hero : Creature
 
 			SkillBase skill = Skills.GetReadySkill();
 			ChaseOrAttackTarget(HERO_SEARCH_DISTANCE, skill);
-			//ChaseOrAttackTarget(AttackDistance, HERO_SEARCH_DISTANCE);
 			return;
 		}
 
