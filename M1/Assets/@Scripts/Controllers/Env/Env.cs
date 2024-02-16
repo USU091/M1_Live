@@ -77,6 +77,7 @@ public class Env : BaseObject
         EnvState = EEnvState.OnDamaged;
 
         // TODO : Show UI
+        Managers.Object.ShowDamageFont(CenterPosition, finalDamage, transform);
 
         Hp = Mathf.Clamp(Hp - finalDamage, 0, MaxHp);
         if (Hp <= 0)
