@@ -95,6 +95,12 @@ public class BaseObject : InitBase
 		SkeletonAnim.skeletonDataAsset = Managers.Resource.Load<SkeletonDataAsset>(dataLabel);
 		SkeletonAnim.Initialize(true);
 
+		if(SkeletonAnim.AnimationState != null)
+        {
+			SkeletonAnim.AnimationState.Event -= OnAnimEventHandler;
+			SkeletonAnim.AnimationState.Event += OnAnimEventHandler;
+        }
+
 		//Spine SkeletonAnimation은 Sprite Renderer를 사용하지 않고 Mesh Renderer을 사용함
 		//그렇기 때문에 2D Sort Axis가 안먹히게 되는데 SortingGroup을 SpriteRenderer, MeshRenderer을 같이 계산함
 
