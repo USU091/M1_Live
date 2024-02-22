@@ -45,6 +45,15 @@ public class EffectBase : BaseObject
             Remains = EffectData.TickTime * EffectData.TickCount;
     }
 
+    /* 
+    도트 뎀
+    도트 힐
+    패시브 영구적
+    힘 버프
+    체력 버프
+    민첩 디버프
+    ...
+     */
     //이펙트를 적용하기 위한 함수. 만약 effect실행 오브젝트가 있다면 스폰하는 함수와 코루틴을 사용하여 실제로 DotDamage를 줄 수있도록 함수 구현
     public virtual void ApplyEffect()
     {
