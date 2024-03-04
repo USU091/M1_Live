@@ -210,7 +210,7 @@ public static class Define
 	public const float HERO_DEFAULT_STOP_RANGE = 1.5f;
 
 
-	public const int HERO_DEFAULT_MOVE_DEPTH = 5;
+	public const int HERO_DEFAULT_MOVE_DEPTH = 10;
 	public const int MONSTER_DEFAULT_MOVE_DEPTH = 3;
 
 	public const int HERO_WIZARD_ID = 201000;

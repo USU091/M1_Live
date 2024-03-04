@@ -16,6 +16,16 @@ public class Creature : BaseObject
 
 	public EffectComponent Effects { get; set; }
 
+	float DistToTargetSqr
+    {
+        get
+        {
+			Vector3 dir = (Target.transform.position - transform.position);
+			float distToTarget = Math.Max(0, dir.magnitude - Target.ExtraCells * 1f - ExtraCells * 1f);		//임시
+			return distToTarget * distToTarget;
+        }
+    }
+
 	#region Stats
 	public float Hp { get; set; }
 	public CreatureStat MaxHp;
@@ -195,9 +205,7 @@ public class Creature : BaseObject
 			return;
         }
 
-
-		Vector3 dir = (Target.CenterPosition - CenterPosition);
-		float distToTargetSqr = dir.sqrMagnitude;
+		float distToTargetSqr = DistToTargetSqr;
 		float attackDistanceSqr = AttackDistance * AttackDistance;
 		if (distToTargetSqr > attackDistanceSqr)
 		{
@@ -314,7 +322,7 @@ public class Creature : BaseObject
 	protected void ChaseOrAttackTarget(float chaseRange, float attackRange )
 	{
 		Vector3 dir = (Target.transform.position - transform.position);
-		float distToTargetSqr = dir.sqrMagnitude;
+		float distToTargetSqr = DistToTargetSqr;		//몬스터의 그리드 차지하는 비중이 높아지면서 서로 타격거리 안으로 들어오지 않으므로 임시로 값을 취해줌
 		float attackDistanceSqr = attackRange * attackRange;
 
 		if (distToTargetSqr <= attackDistanceSqr)
@@ -362,7 +370,7 @@ public class Creature : BaseObject
 			return EFindPathResult.Fail_LerpCell;
 
 		// A*
-		List<Vector3Int> path = Managers.Map.FindPath(CellPos, destCellPos, maxDepth);
+		List<Vector3Int> path = Managers.Map.FindPath(this, CellPos, destCellPos, maxDepth);
 		if (path.Count < 2)
 			return EFindPathResult.Fail_NoPath;
 

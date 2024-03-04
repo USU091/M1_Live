@@ -18,18 +18,18 @@ public class GameScene : BaseScene
         HeroCamp camp = Managers.Object.Spawn<HeroCamp>(Vector3.zero, 0);
 		camp.SetCellPos(new Vector3Int(0, 0, 0), true);
 
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			//int heroTemplateID = HERO_LION_ID + Random.Range(0, 5);
-			//int heroTemplateID = HERO_KNIGHT_ID;
+			int heroTemplateID = HERO_KNIGHT_ID;
 			//int heroTemplateID = HERO_WIZARD_ID;
-			int heroTemplateID = HERO_LION_ID;
+			//int heroTemplateID = HERO_LION_ID;
 			Vector3Int randCellPos = new Vector3Int(0 + Random.Range(-3, 3), 0 + Random.Range(-3, 3), 0);
-			if (Managers.Map.CanGo(randCellPos) == false)
+			if (Managers.Map.CanGo(null, randCellPos) == false)
 				continue;
 
 			Hero hero = Managers.Object.Spawn<Hero>(new Vector3Int(1,0,0), heroTemplateID);
-			//hero.SetCellPos(randCellPos, true);				->걀극 맵을 통해 이동하는 부분을 구현한 뒤 스피드로 스무스 하게 보이게 만들어야됨
+			//hero.ExtraCells = 1;
 			Managers.Map.MoveTo(hero, randCellPos, true);
 		}
 
@@ -39,8 +39,9 @@ public class GameScene : BaseScene
 		Managers.UI.ShowBaseUI<UI_Joystick>();
 
 		{
-			Monster monster = Managers.Object.Spawn<Monster>(new Vector3(1, 1, 0), MONSTER_SLIME_ID);
-			Managers.Map.MoveTo(monster, new Vector3Int(0, 4, 0), true);
+            Monster monster = Managers.Object.Spawn<Monster>(new Vector3(1, 1, 0), MONSTER_BEAR_ID);
+            monster.ExtraCells = 1;
+            Managers.Map.MoveTo(monster, new Vector3Int(0, 4, 0), true);
         }
 
 		{
