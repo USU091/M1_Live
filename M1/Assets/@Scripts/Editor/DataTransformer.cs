@@ -23,6 +23,7 @@ public class DataTransformer : EditorWindow
 		ParseExcelDataToJson<ProjectileDataLoader, ProjectileData>("Projectile");
 		ParseExcelDataToJson<EffectDataLoader, EffectData>("Effect");
 		ParseExcelDataToJson<AoEDataLoader, AoEData>("AoE");
+		ParseExcelDataToJson<NpcDataLoader, NpcData>("Npc");
 
 		//LEGACY_ParseTestData("Test");
 

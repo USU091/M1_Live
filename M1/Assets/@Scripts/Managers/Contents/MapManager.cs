@@ -43,7 +43,6 @@ public class MapManager
 
 		ParseCollisionData(map, mapName);
 
-		SpawnObjectsByData(map, mapName);
 	}
 
 	public void DestroyMap()
@@ -94,46 +93,6 @@ public class MapManager
 		}
 	}
 
-	void SpawnObjectsByData(GameObject map, string mapName, string tilemap = "Tilemap_Object")
-	{
-		Tilemap tm = Util.FindChild<Tilemap>(map, tilemap, true);
-
-		if (tm != null)
-			tm.gameObject.SetActive(false);
-
-		//Temp	, 곰탱이 하나만 스폰하도록
-		return;
-		for (int y = tm.cellBounds.yMax; y >= tm.cellBounds.yMin; y--)
-		{
-			for (int x = tm.cellBounds.xMin; x <= tm.cellBounds.xMax; x++)
-			{
-				Vector3Int cellPos = new Vector3Int(x, y, 0);
-				CustomTile tile = tm.GetTile(cellPos) as CustomTile;
-				if (tile == null)
-					continue;
-
-				if (tile.ObjectType == Define.EObjectType.Env)
-				{
-					Vector3 worldPos = Cell2World(cellPos);
-					Env env = Managers.Object.Spawn<Env>(worldPos, tile.DataId);
-					env.SetCellPos(cellPos, true);
-				}
-				else
-				{
-					if (tile.ObjectType == Define.EObjectType.Monster)
-					{
-						Vector3 worldPos = Cell2World(cellPos);
-						Monster monster = Managers.Object.Spawn<Monster>(worldPos, tile.DataId);
-						monster.SetCellPos(cellPos, true);
-					}
-					else if (tile.ObjectType == Define.EObjectType.Npc)
-					{
-
-					}
-				}
-			}
-		}
-	}
 
 	public bool MoveTo(Creature obj, Vector3Int cellPos, bool forceMove = false)
 	{
