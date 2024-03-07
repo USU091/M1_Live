@@ -29,12 +29,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9beaf8938c28f834d9738b7b52428d5d
-    m_Address: BaseMap
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8dff1069f3034324a8343d5aa759f05e
     m_Address: Env
     m_ReadOnly: 0
@@ -73,6 +67,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d2f797fc7888fb949b9d93c2d97cf24f
     m_Address: AoE
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7c834880c8d8774da453c252b4185a6
+    m_Address: 022_SkeletonData
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

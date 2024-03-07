@@ -17,62 +17,104 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 581a7fcd2d1080f448fb788e7d0330f3
   m_SerializeEntries:
-  - m_GUID: 2df0224194949fa4eb0abf7f0794c697
-    m_Address: goblin_shot.sprite
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e9800db185e09294eb17706198388639
-    m_Address: wizard_shot.sprite
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 12f4ac35f4aa55f4088d268292867a5c
-    m_Address: Object_Firewood.sprite
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a13b208f317e82044b2a3e8e191b270f
-    m_Address: Object_Meat.sprite
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7a29e2e2fc5d1564e96f6fabcd88ae87
-    m_Address: Object_Mineral.sprite
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4d5660e9fa02adc4c858e85a0d588f81
+  - m_GUID: 2866e1f69feba374e9ba7499aec76c6d
     m_Address: 001.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: eb8a81b15336c0b47ac10ec3747c5c5c
+  - m_GUID: 7070e5b061f1d1847868d9eb0b4e7cb9
     m_Address: 002.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4278500889e5a8a49b6ac713471b1e11
-    m_Address: 005.sprite
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 61c1a440b4a958941b6330f3e7c9ddc0
+  - m_GUID: f557cfa0156e6ed4d86f4e08e23c8298
     m_Address: 003.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e29ac53913e3461459fca4d948a9592f
+  - m_GUID: 189e2249395e05a40af50684e2358c25
     m_Address: 004.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad9b13230f9c3894884e35fdd463d9f9
+    m_Address: 005.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87be567af8c46254fab00cafb7eb3a37
+    m_Address: 020.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98746b0d00a325c4ca55d94a17e00adc
+    m_Address: wizard_shot.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b84e434f50b47294eaebd8c2be0797ee
+    m_Address: bear.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7bd0ae4e5272e834284e4e0e1d826395
+    m_Address: goblin.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc3146a347818bc45a9d293c32669bc8
+    m_Address: goblin_shot.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f46d7c5c8e8d5f4bb2ef92e9d0c9d6f
+    m_Address: slime.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c37588462a5ea2c4d856d434bdf1ef28
+    m_Address: spider_common.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b21ad71a3c677994fa4f41c7e4dcf6c5
+    m_Address: spider_rare.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b347b924e09dca4b8d3cfaf0bd54835
+    m_Address: whildboar.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 80a62f52ea64bba4e9f59cff975b5056
+    m_Address: woodman.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e9a97fa10743de468e835b553974a09
+    m_Address: Object_Firewood.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9456dad1f5957414ab37f3ac1e8f980e
+    m_Address: Object_Meat.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
