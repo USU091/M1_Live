@@ -195,7 +195,15 @@ public static class Define
 
     }
 
-
+	public enum ELanguage
+	{
+		Korean,
+		English,
+		French,
+		SimplifiedChinese,
+		TraditionalChinese,
+		Japanese
+	}
 
 
 
