@@ -60,7 +60,7 @@ public class GameManager
 		int x = Random.Range(-range, range);
 		int y = Random.Range(-range, range);
 
-		for(int i =0; i < 10000; i++)
+		for(int i =0; i < 100; i++)
         {
 			Vector3Int randCellPos = pivot + new Vector3Int(x, y, 0);
 			if (Managers.Map.CanGo(hero, randCellPos))

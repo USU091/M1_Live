@@ -27,9 +27,13 @@ public class UI_WaypointPopup : UI_Popup
         BindObjects(typeof(GameObjects));
         BindButtons(typeof(Buttons));
 
-        _items.Clear();
+
 
         GetButton((int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
+
+        _items.Clear();
+
+
         GameObject parent = GetObject((int)GameObjects.WaypointList);
         for(int i =0; i < MAX_ITEM_COUNT; i++)
         {
@@ -68,7 +72,7 @@ public class UI_WaypointPopup : UI_Popup
             {
                 Stage stage = stages[i];
                 _items[i].SetInfo(stage, () => Managers.UI.ClosePopupUI(this));
-                _items[i].gameObject.SetActive(false);
+                _items[i].gameObject.SetActive(true);
             }
             else
             {
