@@ -49,7 +49,7 @@ public class GameManager
 		private set
 		{
 			_saveData.Wood = value;
-			//(Managers.UI.SceneUI as UI_GameScene)?.RefreshWoodText();
+			(Managers.UI.SceneUI as UI_GameScene)?.RefreshWoodText();
 		}
 	}
 
@@ -59,7 +59,7 @@ public class GameManager
 		private set
 		{
 			_saveData.Mineral = value;
-			//(Managers.UI.SceneUI as UI_GameScene)?.RefreshMineralText();
+			(Managers.UI.SceneUI as UI_GameScene)?.RefreshMineralText();
 		}
 	}
 
@@ -69,7 +69,7 @@ public class GameManager
 		private set
 		{
 			_saveData.Meat = value;
-			//(Managers.UI.SceneUI as UI_GameScene)?.RefreshMeatText();
+			(Managers.UI.SceneUI as UI_GameScene)?.RefreshMeatText();
 		}
 	}
 
@@ -79,7 +79,7 @@ public class GameManager
 		private set
 		{
 			_saveData.Gold = value;
-			//(Managers.UI.SceneUI as UI_GameScene)?.RefreshGoldText();
+			(Managers.UI.SceneUI as UI_GameScene)?.RefreshGoldText();
 		}
 	}
 

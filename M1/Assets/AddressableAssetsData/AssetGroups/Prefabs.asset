@@ -71,12 +71,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c7c834880c8d8774da453c252b4185a6
-    m_Address: 022_SkeletonData
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5a40e413d750cdb44b0fe888fbf55284
     m_Address: BaseMap
     m_ReadOnly: 0
@@ -85,24 +79,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 77e992081ae1ef44d99cca72c199b080
     m_Address: Npc
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 925844f9516538548b20f2ace2cfde49
-    m_Address: UI_NpcInteraction
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d56f664cd78a0574588a42cb202beee3
-    m_Address: UI_WaypointPopup
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 78ca2376289192c4c96599cd00af2819
-    m_Address: UI_StageItem
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
