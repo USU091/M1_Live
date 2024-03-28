@@ -123,6 +123,9 @@ public class Stage : MonoBehaviour
     {
         foreach (BaseObject obj in _spawnObjects)
         {
+            if (obj == null)
+                return;
+
             switch (obj.ObjectType)
             {
                 case EObjectType.Monster:

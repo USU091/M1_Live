@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Define;
 
@@ -104,4 +105,25 @@ public static class Util
 				return EFFECT_SMALL_RADIUS;
 		}
 	}
+
+	// 드랍 아이템 가중치 구하는 함수 
+	public static T RandomElementByWeight<T>(this IEnumerable<T> sequence, Func<T, float> weightSelector)
+    {
+		float totalWeight = sequence.Sum(weightSelector);
+
+		double itemWeightIndex = new System.Random().NextDouble() * totalWeight;
+		float currentWeightIndex = 0;
+
+		foreach(var item in from weightedItem in sequence select new { Value = weightedItem, Weight = weightSelector(weightedItem)})
+        {
+			currentWeightIndex += item.Weight;
+
+			if (currentWeightIndex >= itemWeightIndex)
+				return item.Value;
+
+        }
+
+		return default(T);
+
+    }
 }

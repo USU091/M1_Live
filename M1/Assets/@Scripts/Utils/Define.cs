@@ -42,7 +42,8 @@ public static class Define
 		Npc,
 		Projectile,
 		Env,
-		Effect
+		Effect,
+		ItemHolder,
 
 	}
 

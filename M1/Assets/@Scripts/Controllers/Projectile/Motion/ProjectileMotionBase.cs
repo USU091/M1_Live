@@ -13,6 +13,9 @@ public abstract class ProjectileMotionBase : InitBase
 	public Data.ProjectileData ProjectileData { get; private set; }
 	protected Action EndCallback { get; private set; }      //종착지까지 갔을때 호출되는 함수생성. 죽는다던지, 아니면 터진다던지 등등 구현가능
 
+	protected float _speed;
+
+
 	public override bool Init()
 	{
 		if (base.Init() == false)
@@ -23,7 +26,15 @@ public abstract class ProjectileMotionBase : InitBase
 
 	protected void SetInfo(int projectileTemplateID, Vector3 spawnPosition, Vector3 targetPosition, Action endCallback = null)
 	{
-		ProjectileData = Managers.Data.ProjectileDic[projectileTemplateID];
+		_speed = 5.0f;
+
+		if(projectileTemplateID != 0)
+        {
+			ProjectileData = Managers.Data.ProjectileDic[projectileTemplateID];
+			_speed = ProjectileData.ProjSpeed;
+
+		}
+
 		StartPosition = spawnPosition;
 		TargetPosition = targetPosition;
 		EndCallback = endCallback;

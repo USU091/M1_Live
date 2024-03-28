@@ -1,7 +1,7 @@
-DataId,DescriptionTextID,Label,ColliderOffSetX,ColliderOffsetY,ColliderRadius,MaxHp,UpMaxHp,Atk,AtkRange,AtkBonus,MovSpeed,CriRate,Cridamage,IconImage,SkeletonDataID,DefaultSkill,EnvSkill,SkillA,SkillB
-201000,À§ÀÚµå,HeroPrefab,0,0.5,0.6,1000,2,25,4,2,5,0.15,1.5,002.sprite,002_SkeletonData,10002,0,0,0
-201001,ÁÖÀÎ°ø,HeroPrefab,0,0.5,0.6,1000,2,2500,1.8,2,5,0.15,1.5,001.sprite,001_SkeletonData,10001,0,0,0
-201002,¿¬±İ¼ú»ç,HeroPrefab,0,0.5,0.6,1000,2,25,4,2,5,0.15,1.5,003.sprite,003_SkeletonData,10002,0,10008,10011
-201003,»çÀÚ,HeroPrefab,0,0.5,0.6,1000,2,25,1.8,2,5,0.15,1.5,004.sprite,004_SkeletonData,10001,0,10018,10019
-201004,¹ìÆÄ,HeroPrefab,0,0.5,0.6,1000,2,25,1.8,2,5,0.15,1.5,005.sprite,005_SkeletonData,10001,0,0,0
-201020,¿ÀÀ¢,HeroPrefab,0,0.5,0.6,1000,2,25,1.8,2,5,0.15,1.5,020.sprite,020_SkeletonData,10001,0,10020,0
+ï»¿DataId,DescriptionTextID,Label,ColliderOffSetX,ColliderOffsetY,ColliderRadius,MaxHp,UpMaxHp,Atk,AtkRange,AtkBonus,MovSpeed,CriRate,Cridamage,IconImage,SkeletonDataID,DefaultSkill,EnvSkill,SkillA,SkillB
+201000,ìœ„ìë“œ,HeroPrefab,0,0.5,0.6,1000,2,25,4,2,5,0.15,1.5,002.sprite,002_SkeletonData,10002,0,0,0
+201001,ì£¼ì¸ê³µ,HeroPrefab,0,0.5,0.6,1000,2,2500,1.8,2,5,0.15,1.5,001.sprite,001_SkeletonData,10001,0,0,0
+201002,ì—°ê¸ˆìˆ ì‚¬,HeroPrefab,0,0.5,0.6,1000,2,25,4,2,5,0.15,1.5,003.sprite,003_SkeletonData,10002,0,10008,10011
+201003,ì‚¬ì,HeroPrefab,0,0.5,0.6,1000,2,25,1.8,2,5,0.15,1.5,004.sprite,004_SkeletonData,10001,0,10018,10019
+201004,ë±€íŒŒ,HeroPrefab,0,0.5,0.6,1000,2,25,1.8,2,5,0.15,1.5,005.sprite,005_SkeletonData,10001,0,0,0
+201020,ì˜¤ì›¬,HeroPrefab,0,0.5,0.6,1000,2,25,1.8,2,5,0.15,1.5,020.sprite,020_SkeletonData,10001,0,10020,0

@@ -352,7 +352,6 @@ public class Creature : BaseObject
 
 	protected void ChaseOrAttackTarget(float chaseRange, float attackRange )
 	{
-		Vector3 dir = (Target.transform.position - transform.position);
 		float distToTargetSqr = DistToTargetSqr;		//몬스터의 그리드 차지하는 비중이 높아지면서 서로 타격거리 안으로 들어오지 않으므로 임시로 값을 취해줌
 		float attackDistanceSqr = attackRange * attackRange;
 

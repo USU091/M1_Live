@@ -13,6 +13,7 @@ public class ObjectManager
 	public HashSet<Env> Envs { get; } = new HashSet<Env>();
 	public HashSet<Npc> Npcs { get; } = new HashSet<Npc>();
 	public HashSet<EffectBase> Effects { get; } = new HashSet<EffectBase>();
+	public HashSet<ItemHolder> ItemHolders { get; } = new HashSet<ItemHolder>();
 	public HeroCamp Camp { get; private set; }
 
 	#region Roots
@@ -30,6 +31,9 @@ public class ObjectManager
 	public Transform ProjectileRoot { get { return GetRootTransform("@Projectiles"); } }
 	public Transform EnvRoot { get { return GetRootTransform("@Envs"); } }
 	public Transform NpcRoot { get { return GetRootTransform("@Npcs"); } }
+	public Transform EffectRoot { get { return GetRootTransform("@Effects"); } }
+	public Transform ItemHolderRoot { get { return GetRootTransform("@ItemHolders"); } }
+
 	
 	#endregion
 
@@ -110,6 +114,14 @@ public class ObjectManager
 
 			npc.SetInfo(templateID);
         }
+		else if(obj.ObjectType == EObjectType.ItemHolder)
+        {
+			obj.transform.parent = ItemHolderRoot;
+
+			ItemHolder itemHolder = go.GetOrAddComponent<ItemHolder>();
+			ItemHolders.Add(itemHolder);
+
+        }
 
 		return obj as T;
 	}
@@ -155,6 +167,13 @@ public class ObjectManager
 			Npc npc = obj as Npc;
 			Npcs.Remove(npc);
         }
+		else if(obj.ObjectType == EObjectType.ItemHolder)
+        {
+			ItemHolder itemHolder = obj as ItemHolder;
+			ItemHolders.Remove(itemHolder);
+        }
+
+
 		Managers.Resource.Destroy(obj.gameObject);
 	}
 	
