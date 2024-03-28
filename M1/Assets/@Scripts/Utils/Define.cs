@@ -251,6 +251,21 @@ public static class Define
 		ManaPotion,
     }
 
+	public enum EEquipSlotType
+    {
+		None,
+		Weapon,
+		Helmet,
+		Armor,
+		Shield,
+		Gloves,
+		Shoes,
+		EquipMax,
+
+		Inventory = 100,
+		WareHouse = 200,
+    }
+
 
 
 	public const float EFFECT_SMALL_RADIUS = 2.5f;
